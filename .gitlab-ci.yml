@@ -19,7 +19,7 @@ build:
       dotenv: variables.env
     name: $CI_COMMIT_REF_SLUG
     paths:
-      - $CI_PROJECT_DIR/dist/*.*
+      - dist/
     when: on_success
 #  only:
 #    - main //specific branch build change branch according your repo
