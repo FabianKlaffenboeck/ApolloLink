@@ -14,6 +14,7 @@ build:
     - export APPNAME=$(node -e "console.log(require('./package.json').productName)")
     - echo "APPNAME=$APPNAME" >> variables.env
     - npm run build
+    - ls
   artifacts:
     reports:
       dotenv: variables.env
