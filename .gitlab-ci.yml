@@ -21,6 +21,7 @@ build:
     name: $CI_COMMIT_REF_SLUG
     paths:
       - dist/
+      - release/
     when: on_success
 #  only:
 #    - main //specific branch build change branch according your repo
