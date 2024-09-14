@@ -5,7 +5,7 @@ stages:
 
 
 build:
-  stage: build
+  stage: Build
   script:
     — npm ci — cache .npm
     — npm run build
