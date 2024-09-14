@@ -4,25 +4,13 @@ stages:
   - Release
 
 build:
-  stage: Build
-  image: electronuserland/builder:wine
-  before_script:
-    - npm install
+  stage: build
   script:
-    - export VERSION=$(node -e "console.log(require('./package.json').version)")
-    - echo "VERSION=$VERSION" >> variables.env
-    - export APPNAME=$(node -e "console.log(require('./package.json').productName)")
-    - echo "APPNAME=$APPNAME" >> variables.env
-    - npm run build
+    — npm ci — cache .npm
+    — npm run build
   artifacts:
-    reports:
-      dotenv: variables.env
-    name: $CI_COMMIT_REF_SLUG
     paths:
-      - $CI_PROJECT_DIR/dist/*.*
-    when: on_success
-#  only:
-#    - main //specific branch build change branch according your repo
+      — dist/
 
 variables:
   WIN_BINARY: '${APPNAME}-${VERSION}.exe'
