@@ -3,6 +3,7 @@ stages:
   - Upload
   - Release
 
+
 build:
   stage: build
   script:
@@ -10,7 +11,7 @@ build:
     — npm run build
   artifacts:
     paths:
-      — dist/
+      - dist/
 
 variables:
   WIN_BINARY: '${APPNAME}-${VERSION}.exe'
