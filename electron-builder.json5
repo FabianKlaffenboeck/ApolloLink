@@ -5,12 +5,12 @@
   "asar": true,
   "productName": "ApolloLink_by_FKLab",
   "directories": {
-    "buildResources": "build",
+//    "buildResources": "build",
     "output": "release"
   },
-  "extraMetadata": {
-    "name": "ApolloLink_by_FKLab"
-  },
+//  "extraMetadata": {
+//    "name": "ApolloLink_by_FKLab"
+//  },
   "files": [
     "dist",
     "dist-electron"
