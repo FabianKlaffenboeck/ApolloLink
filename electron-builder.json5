@@ -5,7 +5,11 @@
   "asar": true,
   "productName": "ApolloLink_by_FKLab",
   "directories": {
+    "buildResources": "build",
     "output": "release"
+  },
+  "extraMetadata": {
+    "name": "ApolloLink_by_FKLab"
   },
   "files": [
     "dist",
@@ -13,34 +17,43 @@
   ],
   "mac": {
     "target": [
-      "dmg"
+      {
+        "target": "dmg",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      },
+      {
+        "target": "zip",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      }
     ],
-//    "artifactName": "${productName}-Mac-Installer.${ext}"
+    "artifactName": "mac/${arch}/${productName}-mac-${arch}-${version}.${ext}"
   },
   "win": {
     "target": [
       {
         "target": "nsis",
         "arch": [
-          "x64"
-        ],
-        "artifactName": "${productName}-Setup-${version}.${ext}",
+          "x64",
+          "ia32",
+          "arm64"
+        ]
       },
       {
         "target": "portable",
         "arch": [
-          "x64"
-        ],
-        "artifactName": "${productName}-${version}-portable.${ext}",
-      } ,
-//      {
-//        "target": "MSI",
-//        "arch": [
-//          "x64"
-//        ]
-//      }
+          "x64",
+          "ia32",
+          "arm64"
+        ]
+      },
     ],
-//    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+    "artifactName": "win/${arch}/${productName}-win-${arch}-${version}.${ext}"
   },
   "nsis": {
     "oneClick": false,
@@ -50,8 +63,32 @@
   },
   "linux": {
     "target": [
-      "AppImage"
+      {
+        "target": "AppImage",
+        "arch": [
+          "x64",
+          "arm64",
+          "ia32"
+        ]
+      },
+      {
+        "target": "deb",
+        "arch": [
+          "x64",
+          "arm64",
+          "ia32"
+        ]
+      },
+      {
+        "target": "rpm",
+        "arch": [
+          "x64",
+          "arm64",
+          "ia32"
+        ]
+      }
     ],
-    "artifactName": "${productName}-Linux-${version}.${ext}"
+    "category": "Utility",
+    "artifactName": "linux/${arch}/${productName}-linux-${arch}-${version}.${ext}"
   }
 }
