@@ -1,20 +1,20 @@
-//// @see - https://www.electron.build/configuration/configuration
-//{
-//  "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-//  "appId": "at.FKLab.ApolloLink",
-//  "asar": true,
-//  "productName": "ApolloLink_by_FKLab",
-//  "directories": {
-////    "buildResources": "build",
-//    "output": "release"
+// @see - https://www.electron.build/configuration/configuration
+{
+  "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
+  "appId": "at.FKLab.ApolloLink",
+  "asar": true,
+  "productName": "ApolloLink_by_FKLab",
+  "directories": {
+//    "buildResources": "build",
+    "output": "release"
+  },
+//  "extraMetadata": {
+//    "name": "ApolloLink_by_FKLab"
 //  },
-////  "extraMetadata": {
-////    "name": "ApolloLink_by_FKLab"
-////  },
-//  "files": [
-//    "dist",
-//    "dist-electron"
-//  ],
+  "files": [
+    "dist",
+    "dist-electron"
+  ],
 //  "mac": {
 //    "target": [
 //      {
@@ -34,33 +34,33 @@
 //    ],
 //    "artifactName": "mac/${arch}/${productName}-mac-${arch}-${version}.${ext}"
 //  },
-//  "win": {
-//    "target": [
-//      {
-//        "target": "nsis",
-//        "arch": [
-//          "x64",
-////          "ia32",
-////          "arm64"
-//        ]
-//      },
-//      {
-//        "target": "portable",
-//        "arch": [
-//          "x64",
-////          "ia32",
-////          "arm64"
-//        ]
-//      },
-//    ],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+//          "ia32",
+//          "arm64"
+        ]
+      },
+      {
+        "target": "portable",
+        "arch": [
+          "x64"
+//          "ia32",
+//          "arm64"
+        ]
+      },
+    ],
 //    "artifactName": "win/${arch}/${productName}-win-${arch}-${version}.${ext}"
-//  },
-//  "nsis": {
-//    "oneClick": false,
-//    "perMachine": false,
-//    "allowToChangeInstallationDirectory": true,
-//    "deleteAppDataOnUninstall": false
-//  },
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true,
+    "deleteAppDataOnUninstall": false
+  },
 //  "linux": {
 //    "target": [
 //      {
@@ -91,61 +91,4 @@
 //    "category": "Utility",
 //    "artifactName": "linux/${arch}/${productName}-linux-${arch}-${version}.${ext}"
 //  }
-//}
-
-
-// @see - https://www.electron.build/configuration/configuration
-{
-  "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-  "appId": "at.FKLab.ApolloLink",
-  "asar": true,
-  "productName": "ApolloLink_by_FKLab",
-  "directories": {
-    "output": "release"
-  },
-  "files": [
-    "dist",
-    "dist-electron"
-  ],
-  "mac": {
-    "target": [
-      "dmg"
-    ],
-    //    "artifactName": "${productName}-Mac-Installer.${ext}"
-  },
-  "win": {
-    "target": [
-      {
-        "target": "nsis",
-        "arch": [
-          "x64"
-        ]
-      },
-      {
-        "target": "portable",
-        "arch": [
-          "x64"
-        ]
-      } ,
-      //      {
-      //        "target": "MSI",
-      //        "arch": [
-      //          "x64"
-      //        ]
-      //      }
-    ],
-    //    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
-  },
-  "nsis": {
-    "oneClick": false,
-    "perMachine": false,
-    "allowToChangeInstallationDirectory": true,
-    "deleteAppDataOnUninstall": false
-  },
-  "linux": {
-    "target": [
-      "AppImage"
-    ],
-    "artifactName": "${productName}-Linux-${version}.${ext}"
-  }
 }
