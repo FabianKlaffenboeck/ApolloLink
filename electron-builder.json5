@@ -54,14 +54,16 @@
     ],
   },
   "nsis": {
-    "artifactName": "${productName}-installer-${arch}-${version}.${ext}",
+    "artifactName": "win/${arch}/${productName}-installer-${arch}-${version}.${ext}",
+//    "artifactName": "${productName}-installer-${arch}-${version}.${ext}",
     "oneClick": false,
     "perMachine": false,
     "allowToChangeInstallationDirectory": true,
     "deleteAppDataOnUninstall": false
   },
   "portable": {
-    "artifactName": "${productName}-portable-${arch}-${version}.${ext}"
+    "artifactName": "win/${arch}/${productName}-portable-${arch}-${version}.${ext}",
+//    "artifactName": "${productName}-portable-${arch}-${version}.${ext}"
   }
   //  "linux": {
   //    "target": [
