@@ -53,7 +53,9 @@
         ]
       }
     ],
-    "artifactName": "win/${arch}/${productName}-win-${arch}-${version}.${ext}"
+    "artifactName": "win-${arch}-${productName}-win-${arch}-${version}.${ext}",
+//    "artifactName": "win/${arch}/${productName}-win-${arch}-${version}.${ext}",
+//    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
   },
   "nsis": {
     "oneClick": false,
