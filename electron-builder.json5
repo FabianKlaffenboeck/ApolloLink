@@ -4,9 +4,9 @@
   "appId": "at.FKLab.ApolloLink",
   "asar": true,
   "productName": "ApolloLink_by_FKLab",
-  "directories": {
-    "output": "release/${version}"
-  },
+//  "directories": {
+//    "output": "release/${version}"
+//  },
   "files": [
     "dist",
     "dist-electron"
@@ -15,7 +15,7 @@
     "target": [
       "dmg"
     ],
-    "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
+//    "artifactName": "${productName}-Mac-Installer.${ext}"
   },
   "win": {
     "target": [
@@ -38,7 +38,7 @@
         ]
       }
     ],
-    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+//    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
   },
   "nsis": {
     "oneClick": false,
@@ -50,6 +50,6 @@
     "target": [
       "AppImage"
     ],
-    "artifactName": "${productName}-Linux-${version}.${ext}"
+//    "artifactName": "${productName}-Linux-${version}.${ext}"
   }
 }

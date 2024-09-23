@@ -9,7 +9,18 @@ build-windows:
   before_script:
     - npm install
   script:
+    - npm run build:win
+  artifacts:
+    paths:
+      - dist/
+
+build-linux:
+  stage: build
+  image: node:22
+  before_script:
+    - npm install
+  script:
     - npm run build
   artifacts:
     paths:
-      - release/
+      - dist/
