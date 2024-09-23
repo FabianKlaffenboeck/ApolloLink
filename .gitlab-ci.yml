@@ -1,10 +1,10 @@
 stages:
-  - Build
-  - Upload
-  - Release
+  - build
+  - upload
+  - release
 
-build:
-  stage: Build
+build-windows:
+  stage: build
   image: electronuserland/builder:wine
   before_script:
     - npm install
