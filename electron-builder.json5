@@ -1,9 +1,9 @@
 // @see - https://www.electron.build/configuration/configuration
 {
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-  "appId": "YourAppID",
+  "appId": "at.FKLab.ApolloLink",
   "asar": true,
-  "productName": "YourAppName",
+  "productName": "ApolloLink_by_FKLab",
   "directories": {
     "output": "release/${version}"
   },
@@ -21,6 +21,18 @@
     "target": [
       {
         "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      },
+      {
+        "target": "portable",
+        "arch": [
+          "x64"
+        ]
+      } ,
+      {
+        "target": "MSI",
         "arch": [
           "x64"
         ]
