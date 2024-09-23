@@ -7,9 +7,9 @@
   "directories": {
     "output": "release"
   },
-    "extraMetadata": {
-      "name": "ApolloLink_by_FKLab"
-    },
+  "extraMetadata": {
+    "name": "ApolloLink_by_FKLab"
+  },
   "files": [
     "dist",
     "dist-electron"
@@ -38,61 +38,68 @@
       {
         "target": "nsis",
         "arch": [
-          "x64"
-          //          "ia32",
-          //          "arm64"
+          "x64",
+          "ia32",
+          "arm64"
         ]
       },
       {
         "target": "portable",
         "arch": [
-          "x64"
-          //          "ia32",
-          //          "arm64"
+          "x64",
+          "ia32",
+          "arm64"
         ]
       }
     ],
   },
   "nsis": {
-    "artifactName": "win/${arch}/${productName}-installer-${arch}-${version}.${ext}",
-//    "artifactName": "${productName}-installer-${arch}-${version}.${ext}",
+    "artifactName": "win-${arch}-${productName}-installer-${version}.${ext}",
     "oneClick": false,
     "perMachine": false,
     "allowToChangeInstallationDirectory": true,
     "deleteAppDataOnUninstall": false
   },
   "portable": {
-    "artifactName": "win/${arch}/${productName}-portable-${arch}-${version}.${ext}",
-//    "artifactName": "${productName}-portable-${arch}-${version}.${ext}"
+    "artifactName": "win-${arch}-${productName}-portable-${version}.${ext}",
+  },
+  "linux": {
+    "target": [
+      {
+        "target": "AppImage",
+        "arch": [
+          "x64",
+          "arm64",
+          "ia32"
+        ]
+      },
+      {
+        "target": "deb",
+        "arch": [
+          "x64",
+          "arm64",
+          "ia32"
+        ]
+      },
+      {
+        "target": "rpm",
+        "arch": [
+          "x64",
+          "arm64",
+          "ia32"
+        ]
+      }
+    ],
+    "category": "Utility",
+    "artifactName": "linux/${arch}/${productName}-linux-${arch}-${version}.${ext}"
+  },
+  appImage: {
+    "artifactName": "linux-${arch}-${productName}-${version}.${ext}"
+  },
+  deb: {
+    "artifactName": "linux-${arch}-${productName}-${version}.${ext}"
+  },
+  rpm: {
+    "artifactName": "linux-${arch}-${productName}-${version}.${ext}"
   }
-  //  "linux": {
-  //    "target": [
-  //      {
-  //        "target": "AppImage",
-  //        "arch": [
-  //          "x64",
-  //          "arm64",
-  //          "ia32"
-  //        ]
-  //      },
-  //      {
-  //        "target": "deb",
-  //        "arch": [
-  //          "x64",
-  //          "arm64",
-  //          "ia32"
-  //        ]
-  //      },
-  //      {
-  //        "target": "rpm",
-  //        "arch": [
-  //          "x64",
-  //          "arm64",
-  //          "ia32"
-  //        ]
-  //      }
-  //    ],
-  //    "category": "Utility",
-  //    "artifactName": "linux/${arch}/${productName}-linux-${arch}-${version}.${ext}"
-  //  }
 }
