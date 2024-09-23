@@ -9,7 +9,7 @@ build-windows:
   before_script:
     - npm install
   script:
-    - npm run build:win
+    - npm run build-win
   artifacts:
     paths:
       - dist/
@@ -20,7 +20,7 @@ build-linux:
   before_script:
     - npm install
   script:
-    - npm run build
+    - npm run build-linux
   artifacts:
     paths:
       - dist/
