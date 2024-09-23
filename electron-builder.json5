@@ -1,3 +1,99 @@
+//// @see - https://www.electron.build/configuration/configuration
+//{
+//  "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
+//  "appId": "at.FKLab.ApolloLink",
+//  "asar": true,
+//  "productName": "ApolloLink_by_FKLab",
+//  "directories": {
+////    "buildResources": "build",
+//    "output": "release"
+//  },
+////  "extraMetadata": {
+////    "name": "ApolloLink_by_FKLab"
+////  },
+//  "files": [
+//    "dist",
+//    "dist-electron"
+//  ],
+//  "mac": {
+//    "target": [
+//      {
+//        "target": "dmg",
+//        "arch": [
+//          "x64",
+//          "arm64"
+//        ]
+//      },
+//      {
+//        "target": "zip",
+//        "arch": [
+//          "x64",
+//          "arm64"
+//        ]
+//      }
+//    ],
+//    "artifactName": "mac/${arch}/${productName}-mac-${arch}-${version}.${ext}"
+//  },
+//  "win": {
+//    "target": [
+//      {
+//        "target": "nsis",
+//        "arch": [
+//          "x64",
+////          "ia32",
+////          "arm64"
+//        ]
+//      },
+//      {
+//        "target": "portable",
+//        "arch": [
+//          "x64",
+////          "ia32",
+////          "arm64"
+//        ]
+//      },
+//    ],
+//    "artifactName": "win/${arch}/${productName}-win-${arch}-${version}.${ext}"
+//  },
+//  "nsis": {
+//    "oneClick": false,
+//    "perMachine": false,
+//    "allowToChangeInstallationDirectory": true,
+//    "deleteAppDataOnUninstall": false
+//  },
+//  "linux": {
+//    "target": [
+//      {
+//        "target": "AppImage",
+//        "arch": [
+//          "x64",
+//          "arm64",
+//          "ia32"
+//        ]
+//      },
+//      {
+//        "target": "deb",
+//        "arch": [
+//          "x64",
+//          "arm64",
+//          "ia32"
+//        ]
+//      },
+//      {
+//        "target": "rpm",
+//        "arch": [
+//          "x64",
+//          "arm64",
+//          "ia32"
+//        ]
+//      }
+//    ],
+//    "category": "Utility",
+//    "artifactName": "linux/${arch}/${productName}-linux-${arch}-${version}.${ext}"
+//  }
+//}
+
+
 // @see - https://www.electron.build/configuration/configuration
 {
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
@@ -5,55 +101,40 @@
   "asar": true,
   "productName": "ApolloLink_by_FKLab",
   "directories": {
-//    "buildResources": "build",
     "output": "release"
   },
-//  "extraMetadata": {
-//    "name": "ApolloLink_by_FKLab"
-//  },
   "files": [
     "dist",
     "dist-electron"
   ],
   "mac": {
     "target": [
-      {
-        "target": "dmg",
-        "arch": [
-          "x64",
-          "arm64"
-        ]
-      },
-      {
-        "target": "zip",
-        "arch": [
-          "x64",
-          "arm64"
-        ]
-      }
+      "dmg"
     ],
-    "artifactName": "mac/${arch}/${productName}-mac-${arch}-${version}.${ext}"
+    //    "artifactName": "${productName}-Mac-Installer.${ext}"
   },
   "win": {
     "target": [
       {
         "target": "nsis",
         "arch": [
-          "x64",
-//          "ia32",
-//          "arm64"
+          "x64"
         ]
       },
       {
         "target": "portable",
         "arch": [
-          "x64",
-//          "ia32",
-//          "arm64"
+          "x64"
         ]
-      },
+      } ,
+      //      {
+      //        "target": "MSI",
+      //        "arch": [
+      //          "x64"
+      //        ]
+      //      }
     ],
-    "artifactName": "win/${arch}/${productName}-win-${arch}-${version}.${ext}"
+    //    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
   },
   "nsis": {
     "oneClick": false,
@@ -63,32 +144,8 @@
   },
   "linux": {
     "target": [
-      {
-        "target": "AppImage",
-        "arch": [
-          "x64",
-          "arm64",
-          "ia32"
-        ]
-      },
-      {
-        "target": "deb",
-        "arch": [
-          "x64",
-          "arm64",
-          "ia32"
-        ]
-      },
-      {
-        "target": "rpm",
-        "arch": [
-          "x64",
-          "arm64",
-          "ia32"
-        ]
-      }
+      "AppImage"
     ],
-    "category": "Utility",
-    "artifactName": "linux/${arch}/${productName}-linux-${arch}-${version}.${ext}"
+    "artifactName": "${productName}-Linux-${version}.${ext}"
   }
 }
