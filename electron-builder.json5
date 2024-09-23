@@ -5,55 +5,55 @@
   "asar": true,
   "productName": "ApolloLink_by_FKLab",
   "directories": {
-//    "buildResources": "build",
+    //    "buildResources": "build",
     "output": "release"
   },
-//  "extraMetadata": {
-//    "name": "ApolloLink_by_FKLab"
-//  },
+  //  "extraMetadata": {
+  //    "name": "ApolloLink_by_FKLab"
+  //  },
   "files": [
     "dist",
     "dist-electron"
   ],
-//  "mac": {
-//    "target": [
-//      {
-//        "target": "dmg",
-//        "arch": [
-//          "x64",
-//          "arm64"
-//        ]
-//      },
-//      {
-//        "target": "zip",
-//        "arch": [
-//          "x64",
-//          "arm64"
-//        ]
-//      }
-//    ],
-//    "artifactName": "mac/${arch}/${productName}-mac-${arch}-${version}.${ext}"
-//  },
+  //  "mac": {
+  //    "target": [
+  //      {
+  //        "target": "dmg",
+  //        "arch": [
+  //          "x64",
+  //          "arm64"
+  //        ]
+  //      },
+  //      {
+  //        "target": "zip",
+  //        "arch": [
+  //          "x64",
+  //          "arm64"
+  //        ]
+  //      }
+  //    ],
+  //    "artifactName": "mac/${arch}/${productName}-mac-${arch}-${version}.${ext}"
+  //  },
   "win": {
     "target": [
       {
         "target": "nsis",
         "arch": [
           "x64"
-//          "ia32",
-//          "arm64"
+          //          "ia32",
+          //          "arm64"
         ]
       },
       {
         "target": "portable",
         "arch": [
           "x64"
-//          "ia32",
-//          "arm64"
+          //          "ia32",
+          //          "arm64"
         ]
-      },
+      }
     ],
-//    "artifactName": "win/${arch}/${productName}-win-${arch}-${version}.${ext}"
+    "artifactName": "win/${arch}/${productName}-win-${arch}-${version}.${ext}"
   },
   "nsis": {
     "oneClick": false,
@@ -61,34 +61,34 @@
     "allowToChangeInstallationDirectory": true,
     "deleteAppDataOnUninstall": false
   },
-//  "linux": {
-//    "target": [
-//      {
-//        "target": "AppImage",
-//        "arch": [
-//          "x64",
-//          "arm64",
-//          "ia32"
-//        ]
-//      },
-//      {
-//        "target": "deb",
-//        "arch": [
-//          "x64",
-//          "arm64",
-//          "ia32"
-//        ]
-//      },
-//      {
-//        "target": "rpm",
-//        "arch": [
-//          "x64",
-//          "arm64",
-//          "ia32"
-//        ]
-//      }
-//    ],
-//    "category": "Utility",
-//    "artifactName": "linux/${arch}/${productName}-linux-${arch}-${version}.${ext}"
-//  }
+  //  "linux": {
+  //    "target": [
+  //      {
+  //        "target": "AppImage",
+  //        "arch": [
+  //          "x64",
+  //          "arm64",
+  //          "ia32"
+  //        ]
+  //      },
+  //      {
+  //        "target": "deb",
+  //        "arch": [
+  //          "x64",
+  //          "arm64",
+  //          "ia32"
+  //        ]
+  //      },
+  //      {
+  //        "target": "rpm",
+  //        "arch": [
+  //          "x64",
+  //          "arm64",
+  //          "ia32"
+  //        ]
+  //      }
+  //    ],
+  //    "category": "Utility",
+  //    "artifactName": "linux/${arch}/${productName}-linux-${arch}-${version}.${ext}"
+  //  }
 }
