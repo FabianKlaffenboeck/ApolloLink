@@ -15,7 +15,7 @@
     "target": [
       "dmg"
     ],
-    "artifactName": "${productName}-Mac-Installer.${ext}"
+//    "artifactName": "${productName}-Mac-Installer.${ext}"
   },
   "win": {
     "target": [
@@ -38,7 +38,7 @@
 //        ]
 //      }
     ],
-    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+//    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
   },
   "nsis": {
     "oneClick": false,
