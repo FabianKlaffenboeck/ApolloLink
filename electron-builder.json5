@@ -14,25 +14,25 @@
     "dist",
     "dist-electron"
   ],
-  //  "mac": {
-  //    "target": [
-  //      {
-  //        "target": "dmg",
-  //        "arch": [
-  //          "x64",
-  //          "arm64"
-  //        ]
-  //      },
-  //      {
-  //        "target": "zip",
-  //        "arch": [
-  //          "x64",
-  //          "arm64"
-  //        ]
-  //      }
-  //    ],
-  //    "artifactName": "mac/${arch}/${productName}-mac-${arch}-${version}.${ext}"
-  //  },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "artifactName": "mac-${arch}-${productName}-mac-${arch}-${version}.${ext}"
+    },
   "win": {
     "target": [
       {
@@ -44,6 +44,7 @@
         "arch": ["x64", "arm64", "ia32"]
       }
     ],
+    defaultArch: "x64"
   },
   "nsis": {
     "artifactName": "win-${arch}-${productName}-installer-${version}.${ext}",
