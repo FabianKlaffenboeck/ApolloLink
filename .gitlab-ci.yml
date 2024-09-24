@@ -12,7 +12,7 @@ build-windows:
     - npm run build-win
   artifacts:
     paths:
-      - release/
+      - release/*.*
 
 #build-linux:
 #  stage: build
