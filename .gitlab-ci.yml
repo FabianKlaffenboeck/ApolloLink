@@ -13,6 +13,9 @@ build-windows:
   artifacts:
     paths:
       - release/*.*
+    exclude:
+      - release/*.blockmap
+      - release/*.yml
 
 #build-linux:
 #  stage: build
