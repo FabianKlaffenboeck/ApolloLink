@@ -21,8 +21,9 @@ build-windows:
 
 build-linux:
   stage: build
-  image: node:22
+  image: node:16
   before_script:
+    - apt-get update -y && apt-get install -y libgtk-3-dev libxss1 libasound2
     - npm install
   script:
     - npm run build-linux
