@@ -47,14 +47,14 @@
     defaultArch: "x64"
   },
   "nsis": {
-    "artifactName": "win/win-${arch}-${productName}-installer-${version}.${ext}",
+    "artifactName": "win-${arch}-${productName}-installer-${version}.${ext}",
     "oneClick": false,
     "perMachine": false,
     "allowToChangeInstallationDirectory": true,
     "deleteAppDataOnUninstall": false
   },
   "portable": {
-    "artifactName": "win/win-${arch}-${productName}-portable-${version}.${ext}",
+    "artifactName": "win-${arch}-${productName}-portable-${version}.${ext}",
   },
   "linux": {
     "target": [
