@@ -9,8 +9,9 @@ build-windows:
   before_script:
     - npm install
   script:
-    - rm -rf release/*
     - npm run build-win
+  only:
+    - tags
   artifacts:
     paths:
       - release/*.*
@@ -18,13 +19,13 @@ build-windows:
       - release/*.blockmap
       - release/*.yml
 
-#build-linux:
-#  stage: build
-#  image: node:22
-#  before_script:
-#    - npm install
-#  script:
-#    - npm run build-linux
-#  artifacts:
-#    paths:
-#      - dist/
+build-linux:
+  stage: build
+  image: node:22
+  before_script:
+    - npm install
+  script:
+    - npm run build-linux
+  artifacts:
+    paths:
+      - dist/

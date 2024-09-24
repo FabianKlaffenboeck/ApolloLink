@@ -37,11 +37,11 @@
     "target": [
       {
         "target": "nsis",
-        "arch": ["x64"]
+        "arch": ["x64", "arm64", "ia32"]
       },
       {
         "target": "portable",
-        "arch": ["x64"]
+        "arch": ["x64", "arm64", "ia32"]
       }
     ],
     defaultArch: "x64"
@@ -68,22 +68,18 @@
       },
       {
         "target": "rpm",
-        "arch": [
-          "x64",
-          "arm64",
-          "ia32"
-        ]
+        "arch": ["x64", "arm64", "ia32"]
       }
     ],
     "category": "Utility",
   },
   appImage: {
-    "artifactName": "linux-${arch}-${productName}-${version}.${ext}"
+    "artifactName": "linux-${arch}-${productName}-appImage-${version}.${ext}"
   },
   deb: {
-    "artifactName": "linux-${arch}-${productName}-${version}.${ext}"
+    "artifactName": "linux-${arch}-${productName}-deb-${version}.${ext}"
   },
   rpm: {
-    "artifactName": "linux-${arch}-${productName}-${version}.${ext}"
+    "artifactName": "linux-${arch}-${productName}-rpm-${version}.${ext}"
   }
 }
