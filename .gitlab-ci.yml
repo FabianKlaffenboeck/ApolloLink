@@ -29,4 +29,4 @@ build-linux:
     - npm run build-linux
   artifacts:
     paths:
-      - dist/
+      - release/
