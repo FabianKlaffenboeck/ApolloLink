@@ -60,19 +60,17 @@
     "target": [
       {
         "target": "AppImage",
-//        "arch": ["x64", "arm64", "ia32"]
-        "arch": ["x64", "arm64", "armv7l", "ia32"]
+        "arch": ["x64", "arm64", "armv7l"]
       },
 //      {
 //        "target": "deb",
 ////        "arch": ["x64", "arm64", "ia32"]
 //        "arch": ["x64"]
 //      },
-//      {
-//        "target": "rpm",
-////        "arch": ["x64", "arm64", "ia32"]
-//        "arch": ["x64"]
-//      }
+      {
+        "target": "rpm",
+        "arch": ["x64", "arm64", "armv7l"],
+      }
     ],
     "category": "Utility",
     defaultArch: "x64"
