@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "FKLab.at",
+  "author": {
+    "name": "Fabian Klaffenboeck",
+    "email": "fabian@klffenboeck.eu"
+  },
   "scripts": {
     "dev": "vite",
     "build-mac": "tsc && vite build && electron-builder -m",
