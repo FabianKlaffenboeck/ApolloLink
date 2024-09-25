@@ -27,8 +27,8 @@ build-linux:
     - npm install
   script:
     - npm run build-linux
-#  only:
-#    - tags
+  only:
+    - tags
   artifacts:
     paths:
       - release/*.*
