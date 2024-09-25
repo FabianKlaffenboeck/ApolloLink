@@ -1,7 +1,16 @@
 stages:
+  - test
   - build
   - upload
   - release
+
+lint:
+  stage: test
+  image: node:22
+  before_script:
+    - npm install
+  script:
+    - npm run lint
 
 build-windows:
   stage: build
