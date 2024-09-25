@@ -29,4 +29,6 @@ build-linux:
     - npm run build-linux
   artifacts:
     paths:
-      - release/
+      - release/*.*
+    exclude:
+      - release/*.yml
