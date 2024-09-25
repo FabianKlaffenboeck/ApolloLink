@@ -1,0 +1,36 @@
+stages:
+  - build
+  - upload
+  - release
+
+build-windows:
+  stage: build
+  image: electronuserland/builder:wine
+  before_script:
+    - npm install
+  script:
+    - npm run build-win
+  only:
+    - tags
+  artifacts:
+    paths:
+      - release/*.*
+    exclude:
+      - release/*.blockmap
+      - release/*.yml
+
+build-linux:
+  stage: build
+  image: node:22
+  before_script:
+    - apt-get update -y && apt-get install -y libgtk-3-dev libxss1 libasound2
+    - npm install
+  script:
+    - npm run build-linux
+  only:
+    - tags
+  artifacts:
+    paths:
+      - release/*.*
+    exclude:
+      - release/*.yml

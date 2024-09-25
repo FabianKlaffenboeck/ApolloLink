@@ -3,9 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "FKLab.at",
+  "author": {
+    "name": "Fabian Klaffenboeck",
+    "email": "fabian@klffenboeck.eu"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && electron-builder",
+    "build-mac": "tsc && vite build && electron-builder -m",
+    "build-win": "tsc && vite build && electron-builder -w",
+    "build-linux": "tsc && vite build && electron-builder -l",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
