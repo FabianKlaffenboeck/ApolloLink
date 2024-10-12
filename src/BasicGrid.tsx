@@ -1,3 +1,4 @@
+import './BasicGrid.css'
 import React, {useEffect, useState} from "react";
 import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
