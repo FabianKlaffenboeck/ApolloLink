@@ -1,15 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import ChadCn from "@/ChadCn.tsx";
-import App from "@/App.tsx";
-import BasicGrid from "@/BasicGrid.tsx";
+import {Dashboard} from "@/Dasboard.tsx";
+import {TooltipProvider} from "@/components/ui/tooltip.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <App/>
-        <BasicGrid/>
-        <ChadCn/>
+        <TooltipProvider>
+            <Dashboard></Dashboard>
+        </TooltipProvider>
     </React.StrictMode>,
 )
 
