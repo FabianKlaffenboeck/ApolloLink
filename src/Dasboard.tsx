@@ -5,7 +5,7 @@ import {ModeToggle} from "@/components/mode-toggle.tsx";
 import LogoFKLab_Light from '../public/LogoFKLab_Light.svg'
 import LogoFKLab_Dark from '../public/LogoFKLab_Dark.svg'
 import {Theme, useTheme} from "@/components/theme-provider.tsx";
-import './Dasboard.css'
+import ComponentGrid from "@/BasicGrid.tsx";
 
 export function Dashboard() {
 
@@ -16,7 +16,6 @@ export function Dashboard() {
             return <img style={{width: 30.5}} src={LogoFKLab_Light} alt={""}/>
         }
     }
-
 
     return (
         <TooltipProvider>
@@ -65,13 +64,14 @@ export function Dashboard() {
                     <header className="sticky top-0 z-10 flex h-[53px] items-center gap-1 border-b bg-background px-4">
                         <h1 className="text-xl font-semibold">ApolloLink</h1>
                         <div className="ml-auto gap-1.5 text-sm">
-                            <ModeToggle></ModeToggle>
+                            <ModeToggle/>
                         </div>
                     </header>
 
                     <main className="grid flex-1 gap-4 overflow-auto p-4 grid-cols-3 ">
                         <div
                             className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 col-span-3">
+                            <ComponentGrid/>
                         </div>
                     </main>
                 </div>
