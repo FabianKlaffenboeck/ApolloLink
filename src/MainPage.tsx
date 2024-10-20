@@ -26,7 +26,6 @@ export function MainPage() {
 
     const handleTabChange = (selected: TabValue) => {
         setTab(selected);
-        console.log(selected);
     };
 
     const handleAddVisualisationItem = (message: string) => {
