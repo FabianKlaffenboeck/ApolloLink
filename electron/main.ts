@@ -1,7 +1,8 @@
 import {app, BrowserWindow} from 'electron'
 import {fileURLToPath} from 'node:url'
 import path from 'node:path'
-import {autoDetect} from "@fklab/candongle-kvaser";
+import {autoDetect, WindowsCanDeviceKvaser} from "@fklab/candongle-kvaser";
+import {CanMessage} from "@fklab/candongle-interface";
 
 // const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -65,7 +66,17 @@ app.on('activate', () => {
     }
 })
 
+let kaderDongle: WindowsCanDeviceKvaser | null = null
+
 function callback(id: number, data: number[], length: number) {
+
+    if (kaderDongle != null) {
+
+        const list: CanMessage[] = []
+        list.push({id: id + 1, dlc: 8, data: [1, 2, 3, 4, 5, 6, 7, 8]})
+        kaderDongle.write(list)
+    }
+
     console.log(id)
     console.log(data)
     console.log(length)
@@ -76,7 +87,10 @@ app.whenReady().then(() => {
 
     autoDetect().list().then(it => console.log(it))
 
-    autoDetect().open({path: 1, baudRate: 2500000}).then(dongle => {
+
+    autoDetect().open({path: 2, baudRate: 2500000}).then(dongle => {
+
+        kaderDongle = dongle
         // const list: CanMessage[] = []
         //
         // for (let i = 0; i < 5; i++) {

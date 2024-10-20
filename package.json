@@ -17,7 +17,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fklab/candongle-kvaser": "^0.0.57",
+    "@fklab/candongle-kvaser": "^1.0.0",
+    "@fklab/candongle-interface": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup-plugin-commonjs": "^10.1.0"
