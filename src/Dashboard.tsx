@@ -15,7 +15,7 @@ export interface ChildBRef {
     addTile: (message: string) => void;
 }
 
-function BasicGrid(_props: object, ref: React.Ref<ChildBRef>) {
+function Dashboard(_props: object, ref: React.Ref<ChildBRef>) {
 
     const [width, setWidth] = useState<number>(window.innerWidth - 100);
     const [layout, setLayout] = useState<Tile[]>([]);
@@ -81,4 +81,4 @@ function BasicGrid(_props: object, ref: React.Ref<ChildBRef>) {
     )
 }
 
-export default forwardRef(BasicGrid);
+export default forwardRef(Dashboard);

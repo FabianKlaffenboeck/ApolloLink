@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import {Dashboard} from "@/Dasboard.tsx";
 import {ThemeProvider} from "@/components/theme-provider.tsx";
+import {MainPage} from "@/MainPage.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <ThemeProvider>
-            <Dashboard/>
+            <MainPage/>
         </ThemeProvider>
     </React.StrictMode>,
 )

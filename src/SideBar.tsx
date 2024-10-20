@@ -8,7 +8,7 @@ import {GiDigitalTrace} from "react-icons/gi";
 
 export type Visualisation = "TRACE" | "TABLE" | "GRAPH" | "VALUE"
 
-export function Toolbox({onAddVisualisationItem}: { onAddVisualisationItem: (message: Visualisation) => void; }) {
+export function SideBar({onAddVisualisationItem}: { onAddVisualisationItem: (message: Visualisation) => void; }) {
 
     return (
         <TooltipProvider>
