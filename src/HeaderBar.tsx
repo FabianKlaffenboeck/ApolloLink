@@ -1,22 +1,24 @@
 import {ModeToggle} from "@/components/mode-toggle.tsx";
 import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 
-export function HeaderBar() {
 
-    const onTabSelect = (value: string) => {
-        console.log("selected ", value);
-    }
+export type TabValue = "DASBOARD" | "INTERFACES" | "NODES"
+
+
+export function HeaderBar({onTabChange}: { onTabChange: (tab: TabValue) => void; }) {
+
 
     return (
         <header className="sticky top-0 z-10 flex h-[53px] items-center gap-1 border-b bg-background px-4">
             <h1 className="text-xl font-semibold">ApolloLink</h1>
 
             <div className="ml-auto gap-1.5 text-sm">
-                <Tabs defaultValue="dasboard" className="w-[400px]" onValueChange={value => onTabSelect(value)}>
+                <Tabs defaultValue="dasboard" className="w-[400px]"
+                      onValueChange={value => onTabChange(value as "DASBOARD" | "INTERFACES" | "NODES")}>
                     <TabsList>
-                        <TabsTrigger value="dasboard">Dashboard</TabsTrigger>
-                        <TabsTrigger value="interfaces">Interfaces/Channels</TabsTrigger>
-                        <TabsTrigger value="nodes">Nodes</TabsTrigger>
+                        <TabsTrigger value="DASBOARD">Dashboard</TabsTrigger>
+                        <TabsTrigger value="INTERFACES">Interfaces/Channels</TabsTrigger>
+                        <TabsTrigger value="NODES">Nodes</TabsTrigger>
                     </TabsList>
                 </Tabs>
             </div>

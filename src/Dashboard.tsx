@@ -11,11 +11,11 @@ interface Tile {
     h: number;
 }
 
-export interface ChildBRef {
+export interface AddTileRef {
     addTile: (message: string) => void;
 }
 
-function Dashboard(_props: object, ref: React.Ref<ChildBRef>) {
+function Dashboard(_props: object, ref: React.Ref<AddTileRef>) {
 
     const [width, setWidth] = useState<number>(window.innerWidth - 100);
     const [layout, setLayout] = useState<Tile[]>([]);
