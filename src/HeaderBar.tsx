@@ -13,7 +13,7 @@ export function HeaderBar({onTabChange}: { onTabChange: (tab: TabValue) => void;
             <h1 className="text-xl font-semibold">ApolloLink</h1>
 
             <div className="ml-auto gap-1.5 text-sm">
-                <Tabs defaultValue="dasboard" className="w-[400px]"
+                <Tabs defaultValue="DASBOARD" className="w-[400px]"
                       onValueChange={value => onTabChange(value as "DASBOARD" | "INTERFACES" | "NODES")}>
                     <TabsList>
                         <TabsTrigger value="DASBOARD">Dashboard</TabsTrigger>
