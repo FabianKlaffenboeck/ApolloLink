@@ -2,7 +2,7 @@ import {ModeToggle} from "@/components/mode-toggle.tsx";
 import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 
 
-export type TabValue = "DASBOARD" | "INTERFACES" | "NODES"
+export type TabValue = "DASBOARD" | "INTERFACES"
 
 
 export function HeaderBar({onTabChange}: { onTabChange: (tab: TabValue) => void; }) {
@@ -14,11 +14,10 @@ export function HeaderBar({onTabChange}: { onTabChange: (tab: TabValue) => void;
 
             <div className="ml-auto gap-1.5 text-sm">
                 <Tabs defaultValue="DASBOARD" className="w-[400px]"
-                      onValueChange={value => onTabChange(value as "DASBOARD" | "INTERFACES" | "NODES")}>
+                      onValueChange={value => onTabChange(value as "DASBOARD" | "INTERFACES")}>
                     <TabsList>
                         <TabsTrigger value="DASBOARD">Dashboard</TabsTrigger>
                         <TabsTrigger value="INTERFACES">Interfaces/Channels</TabsTrigger>
-                        <TabsTrigger value="NODES">Nodes</TabsTrigger>
                     </TabsList>
                 </Tabs>
             </div>
