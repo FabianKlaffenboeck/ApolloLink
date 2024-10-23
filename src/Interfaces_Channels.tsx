@@ -2,7 +2,6 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup,} from "@/components/ui/resizable"
 
-
 export function Interfaces_Channels() {
 
     return (
@@ -11,15 +10,13 @@ export function Interfaces_Channels() {
         >
             <ResizablePanel defaultSize={50}>
                 <ResizablePanelGroup direction="vertical">
-                    <ResizablePanel defaultSize={25}>
-                        <div className="bg-amber-600 flex h-full items-center justify-center p-6">
-                            <span className="font-semibold">Interfaces</span>
-                        </div>
+                    <ResizablePanel defaultSize={50}>
+                        <div className="flex h-full items-center justify-center p-6"></div>
                     </ResizablePanel>
 
                     <ResizableHandle/>
 
-                    <ResizablePanel defaultSize={75}>
+                    <ResizablePanel defaultSize={50}>
                         <div className="bg-amber-100 flex h-full items-center justify-center p-6">
                             <span className="font-semibold">DBCs</span>
                         </div>
