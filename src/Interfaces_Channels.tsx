@@ -1,6 +1,24 @@
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup,} from "@/components/ui/resizable"
+import {DataTableDemo, Payment} from "@/DataTableDemo.tsx";
+import {ColumnDef} from "@tanstack/react-table";
+
+export const columns: ColumnDef<Payment>[] = [
+    {
+        accessorKey: "status",
+        header: "Status",
+    },
+    {
+        accessorKey: "email",
+        header: "Email",
+    },
+    {
+        accessorKey: "amount",
+        header: "Amount",
+    },
+]
+
 
 export function Interfaces_Channels() {
 
@@ -11,7 +29,9 @@ export function Interfaces_Channels() {
             <ResizablePanel defaultSize={50}>
                 <ResizablePanelGroup direction="vertical">
                     <ResizablePanel defaultSize={50}>
-                        <div className="flex h-full items-center justify-center p-6"></div>
+                        <div className="flex h-full items-center justify-center p-6">
+                            <DataTableDemo></DataTableDemo>
+                        </div>
                     </ResizablePanel>
 
                     <ResizableHandle/>
