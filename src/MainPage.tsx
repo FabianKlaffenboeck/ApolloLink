@@ -6,7 +6,7 @@ import ComponentGrid, {AddTileRef} from "@/Dashboard.tsx";
 import {SideBar} from "@/SideBar.tsx";
 import {HeaderBar, TabValue} from "@/HeaderBar.tsx";
 import {useRef, useState} from "react";
-import {Interfaces_Channels} from "@/Interfaces_Channels.tsx";
+import {Interfaces_Channels} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
 
 
 export function MainPage() {
