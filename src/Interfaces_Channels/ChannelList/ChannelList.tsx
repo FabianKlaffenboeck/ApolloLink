@@ -15,10 +15,11 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {AliasSelector, CanChannel, CanChannelAlias} from "@/Interfaces_Channels/ChannelList/AliasSelector.tsx";
+import {CanChannel, CanInterface, ChannelSelector} from "@/Interfaces_Channels/ChannelList/ChannelSelector.tsx";
 
 
-const channelAliases: CanChannelAlias[] = [
+//FIXME maybe not stringId
+const canChannels: CanChannel[] = [
     {id: "0", label: "Alias 0"},
     {id: "1", label: "Alias 1"},
     {id: "2", label: "Alias 2"},
@@ -26,18 +27,23 @@ const channelAliases: CanChannelAlias[] = [
     {id: "4", label: "Alias 4"},
 ]
 
-const canChannels: CanChannel[] = [
-    {id: 0, status: "available", alias: null, name: "0 Kvaser Leaf Light v2"},
-    {id: 1, status: "available", alias: channelAliases[0].id, name: "1 Kvaser Virtual CAN Driver"},
-    {id: 2, status: "available", alias: null, name: "2 Kvaser Virtual CAN Driver"},
+const canInterfaces: CanInterface[] = [
+    {id: 0, status: "available", canChannel: null, name: "0 Kvaser Leaf Light v2"},
+    {id: 1, status: "available", canChannel: canChannels[0].id, name: "1 Kvaser Virtual CAN Driver"},
+    {id: 2, status: "available", canChannel: null, name: "2 Kvaser Virtual CAN Driver"},
+    {id: 3, status: "available", canChannel: canChannels[1].id, name: "3 Kvaser Virtual CAN Driver"},
+    {id: 4, status: "available", canChannel: null, name: "4 Kvaser Virtual CAN Driver"},
+    {id: 5, status: "available", canChannel: canChannels[2].id, name: "5 Kvaser Virtual CAN Driver"},
+    {id: 6, status: "available", canChannel: null, name: "6 Kvaser Virtual CAN Driver"},
+    {id: 7, status: "available", canChannel: null, name: "7 Kvaser Virtual CAN Driver"},
+    {id: 8, status: "available", canChannel: null, name: "8 Kvaser Virtual CAN Driver"},
+    {id: 9, status: "available", canChannel: null, name: "9 Kvaser Virtual CAN Driver"},
+    {id: 10, status: "available", canChannel: null, name: "10 Kvaser Virtual CAN Driver"},
+    {id: 11, status: "available", canChannel: null, name: "11 Kvaser Virtual CAN Driver"},
+    {id: 12, status: "available", canChannel: null, name: "12 Kvaser Virtual CAN Driver"},
 ]
 
-const columns: ColumnDef<CanChannel>[] = [
-    {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({row}) => (<div className="capitalize">{row.getValue("status")}</div>),
-    },
+const columns: ColumnDef<CanInterface>[] = [
     {
         accessorKey: "name", header: ({column}) => {
             return (
@@ -56,9 +62,14 @@ const columns: ColumnDef<CanChannel>[] = [
         },
     },
     {
-        accessorKey: "alias", header: () => <div className="text-right">Alias</div>, cell: ({row}) => {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({row}) => (<div className="capitalize">{row.getValue("status")}</div>),
+    },
+    {
+        accessorKey: "canChannel", header: "Alias", cell: ({row}) => {
             return (
-                <AliasSelector selected={row.getValue("alias")} aliasList={channelAliases}></AliasSelector>
+                <ChannelSelector selected={row.getValue("canChannel")} aliasList={canChannels}></ChannelSelector>
             )
         },
     }
@@ -70,7 +81,7 @@ export function ChannelList() {
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
 
     const table = useReactTable({
-        data: canChannels,
+        data: canInterfaces,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
@@ -132,4 +143,5 @@ export function ChannelList() {
         </div>
 
     </div>)
+
 }
