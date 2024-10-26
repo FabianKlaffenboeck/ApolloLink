@@ -97,9 +97,9 @@ export function ChannelList() {
     return (<div className="w-full">
         <div>
             <Input
-                placeholder="Filter emails..."
+                placeholder="Filter by name..."
                 value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-                onChange={(event) => table.getColumn("email")?.setFilterValue(event.target.value)}
+                onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
             />
         </div>
 
