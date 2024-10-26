@@ -15,35 +15,21 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {AliasSelector} from "@/Interfaces_Channels/AliasSelector.tsx";
-
-export type CanChannel = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-}
+import {AliasSelector, CanChannel, CanChannelAlias} from "@/Interfaces_Channels/ChannelList/AliasSelector.tsx";
 
 
-const data: CanChannel[] = [
-    {id: "m5gr84i9", amount: 316, status: "success", email: "ken99@yahoo.com"},
-    {id: "3u1reuv4", amount: 242, status: "success", email: "Abe45@gmail.com"},
-    {id: "derv1ws0", amount: 837, status: "processing", email: "Monserrat44@gmail.com"},
-    {id: "5kma53ae", amount: 874, status: "success", email: "Silas22@gmail.com"},
-    {id: "bhqec451", amount: 721, status: "failed", email: "carmel1la@hotmail.com"},
-    {id: "bhq4cj4p", amount: 721, status: "failed", email: "carmel2la@hotmail.com"},
-    {id: "74556782", amount: 721, status: "failed", email: "carmel32la@hotmail.com"},
-    {id: "bhqec64p", amount: 721, status: "failed", email: "carmel48la@hotmail.com"},
-    {id: "wertdfg7", amount: 721, status: "failed", email: "carmell5a@hotmail.com"},
-    {id: "fetertfw", amount: 721, status: "failed", email: "carmel4la@hotmail.com"},
-    {id: "fetertfw", amount: 721, status: "failed", email: "carmel4la@hotmail.com"},
-    {id: "fetertfw", amount: 721, status: "failed", email: "carmel4la@hotmail.com"},
-    {id: "fetertfw", amount: 721, status: "failed", email: "carmel4la@hotmail.com"},
-    {id: "fetertfw", amount: 721, status: "failed", email: "carmel4la@hotmail.com"},
-    {id: "fetertfw", amount: 721, status: "failed", email: "carmel4la@hotmail.com"},
-    {id: "fetertfw", amount: 721, status: "failed", email: "carmel4la@hotmail.com"},
-    {id: "fetertfw", amount: 721, status: "failed", email: "carmel4la@hotmail.com"},
-    {id: "fetertfw", amount: 721, status: "failed", email: "carmel4la@hotmail.com"},
+const channelAliases: CanChannelAlias[] = [
+    {id: "0", label: "Alias 0"},
+    {id: "1", label: "Alias 1"},
+    {id: "2", label: "Alias 2"},
+    {id: "3", label: "Alias 3"},
+    {id: "4", label: "Alias 4"},
+]
+
+const canChannels: CanChannel[] = [
+    {id: 0, status: "available", alias: null, name: "0 Kvaser Leaf Light v2"},
+    {id: 1, status: "available", alias: channelAliases[0].id, name: "1 Kvaser Virtual CAN Driver"},
+    {id: 2, status: "available", alias: null, name: "2 Kvaser Virtual CAN Driver"},
 ]
 
 const columns: ColumnDef<CanChannel>[] = [
@@ -64,14 +50,16 @@ const columns: ColumnDef<CanChannel>[] = [
                 </Button>
             )
         }, cell: ({row}) => {
-            <div className="lowercase">{row.getValue("email")}</div>
+            return (
+                <div className="lowercase">{row.getValue("name")}</div>
+            )
         },
     },
     {
-        accessorKey: "amount", header: () => <div className="text-right">Alias</div>, cell: () => {
-            return <div className="text-right font-medium">
-                <AliasSelector></AliasSelector>
-            </div>
+        accessorKey: "alias", header: () => <div className="text-right">Alias</div>, cell: ({row}) => {
+            return (
+                <AliasSelector selected={row.getValue("alias")} aliasList={channelAliases}></AliasSelector>
+            )
         },
     }
 ]
@@ -82,7 +70,7 @@ export function ChannelList() {
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
 
     const table = useReactTable({
-        data,
+        data: canChannels,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
@@ -99,7 +87,7 @@ export function ChannelList() {
         <div>
             <Input
                 placeholder="Filter emails..."
-                value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+                value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                 onChange={(event) => table.getColumn("email")?.setFilterValue(event.target.value)}
             />
         </div>

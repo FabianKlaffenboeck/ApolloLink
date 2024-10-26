@@ -1,7 +1,7 @@
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup,} from "@/components/ui/resizable.tsx"
-import {ChannelList} from "@/Interfaces_Channels/ChannelList.tsx";
+import {ChannelList} from "@/Interfaces_Channels/ChannelList/ChannelList.tsx";
 
 
 export function Interfaces_Channels() {
