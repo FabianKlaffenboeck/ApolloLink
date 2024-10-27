@@ -15,12 +15,12 @@ export type CanInterface = {
     canChannel: string | null
     status: "available" | "used"
 }
-export type CanChannel = {
+export type CanNetwork = {
     id: string
     label: string
 }
 
-export function ChannelSelector({selected, aliasList}: { selected: string, aliasList: CanChannel[] }) {
+export function ChannelSelector({selected, networkList}: { selected: string, networkList: CanNetwork[] }) {
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState(selected)
 
@@ -33,7 +33,7 @@ export function ChannelSelector({selected, aliasList}: { selected: string, alias
                     aria-expanded={open}
                     className="w-[200px] justify-between"
                 >
-                    {value ? aliasList.find((alias) => alias.id === value)?.label : "Select alias..."}
+                    {value ? networkList.find((network) => network.id === value)?.label : "Select alias..."}
                     <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
                 </Button>
             </PopoverTrigger>
@@ -41,19 +41,19 @@ export function ChannelSelector({selected, aliasList}: { selected: string, alias
                 <Command>
                     <CommandInput placeholder="Search alias..." className="h-9"/>
                     <CommandList>
-                        <CommandEmpty>No Alias found.</CommandEmpty>
+                        <CommandEmpty>No Network found.</CommandEmpty>
                         <CommandGroup>
-                            {aliasList.map((alias) => (<CommandItem
-                                key={alias.id}
-                                value={alias.id}
+                            {networkList.map((network) => (<CommandItem
+                                key={network.id}
+                                value={network.id}
                                 onSelect={(currentValue) => {
                                     setValue(currentValue === value ? "" : currentValue)
                                     setOpen(false)
                                 }}
                             >
-                                {alias.label}
+                                {network.label}
                                 <CheckIcon
-                                    className={cn("ml-auto h-4 w-4", value === alias.id ? "opacity-100" : "opacity-0")}
+                                    className={cn("ml-auto h-4 w-4", value === network.id ? "opacity-100" : "opacity-0")}
                                 />
                             </CommandItem>))}
                         </CommandGroup>

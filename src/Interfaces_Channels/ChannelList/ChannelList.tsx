@@ -15,25 +15,25 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {CanChannel, CanInterface, ChannelSelector} from "@/Interfaces_Channels/ChannelList/ChannelSelector.tsx";
+import {CanInterface, CanNetwork, ChannelSelector} from "@/Interfaces_Channels/ChannelList/ChannelSelector.tsx";
 
 
 //FIXME maybe not stringId
-const canChannels: CanChannel[] = [
-    {id: "0", label: "Alias 0"},
-    {id: "1", label: "Alias 1"},
-    {id: "2", label: "Alias 2"},
-    {id: "3", label: "Alias 3"},
-    {id: "4", label: "Alias 4"},
+const networks: CanNetwork[] = [
+    {id: "0", label: "Network 0"},
+    {id: "1", label: "Network 1"},
+    {id: "2", label: "Network 2"},
+    {id: "3", label: "Network 3"},
+    {id: "4", label: "Network 4"},
 ]
 
 const canInterfaces: CanInterface[] = [
     {id: 0, status: "available", canChannel: null, name: "0 Kvaser Leaf Light v2"},
-    {id: 1, status: "available", canChannel: canChannels[0].id, name: "1 Kvaser Virtual CAN Driver"},
+    {id: 1, status: "available", canChannel: networks[0].id, name: "1 Kvaser Virtual CAN Driver"},
     {id: 2, status: "available", canChannel: null, name: "2 Kvaser Virtual CAN Driver"},
-    {id: 3, status: "available", canChannel: canChannels[1].id, name: "3 Kvaser Virtual CAN Driver"},
+    {id: 3, status: "available", canChannel: networks[1].id, name: "3 Kvaser Virtual CAN Driver"},
     {id: 4, status: "available", canChannel: null, name: "4 Kvaser Virtual CAN Driver"},
-    {id: 5, status: "available", canChannel: canChannels[2].id, name: "5 Kvaser Virtual CAN Driver"},
+    {id: 5, status: "available", canChannel: networks[2].id, name: "5 Kvaser Virtual CAN Driver"},
     {id: 6, status: "available", canChannel: null, name: "6 Kvaser Virtual CAN Driver"},
     {id: 7, status: "available", canChannel: null, name: "7 Kvaser Virtual CAN Driver"},
     {id: 8, status: "available", canChannel: null, name: "8 Kvaser Virtual CAN Driver"},
@@ -51,7 +51,7 @@ const columns: ColumnDef<CanInterface>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Name
+                    Interface
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
                 </Button>
             )
@@ -67,9 +67,9 @@ const columns: ColumnDef<CanInterface>[] = [
         cell: ({row}) => (<div className="capitalize">{row.getValue("status")}</div>),
     },
     {
-        accessorKey: "canChannel", header: "Alias", cell: ({row}) => {
+        accessorKey: "canChannel", header: "Network", cell: ({row}) => {
             return (
-                <ChannelSelector selected={row.getValue("canChannel")} aliasList={canChannels}></ChannelSelector>
+                <ChannelSelector selected={row.getValue("canChannel")} networkList={networks}></ChannelSelector>
             )
         },
     }
