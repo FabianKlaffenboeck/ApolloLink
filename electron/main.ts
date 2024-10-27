@@ -69,17 +69,11 @@ app.on('activate', () => {
 let kaderDongle: WindowsCanDeviceKvaser | null = null
 
 function callback(id: number, data: number[], length: number) {
-
     if (kaderDongle != null) {
 
-        const list: CanMessage[] = []
-        list.push({id: id + 1, dlc: 8, data: [1, 2, 3, 4, 5, 6, 7, 8]})
+        const list: CanMessage[] = [{id: id + 1, dlc: 8, data: [1, 2, 3, 4, 5, 6, 7, 8]}]
         kaderDongle.write(list)
     }
-
-    console.log(id)
-    console.log(data)
-    console.log(length)
 }
 
 app.whenReady().then(() => {
@@ -88,17 +82,17 @@ app.whenReady().then(() => {
     autoDetect().list().then(it => console.log(it))
 
 
-    autoDetect().open({path: 2, baudRate: 2500000}).then(dongle => {
+    autoDetect().open({path: 0, baudRate: 5000000}).then(dongle => {
 
         kaderDongle = dongle
-        // const list: CanMessage[] = []
-        //
-        // for (let i = 0; i < 5; i++) {
-        //     list.push({id: 0x10, dlc: 8, data: [1,2,3,4,5,6,7,8]})
-        // }
+        const list: CanMessage[] = []
 
-        dongle.setMessageCallback(callback)
+        for (let i = 0; i < 5; i++) {
+            list.push({id: 0x10, dlc: 8, data: [1,2,3,4,5,6,7,8]})
+        }
 
-        // dongle.write(list)
+        // dongle.setMessageCallback(callback)
+
+        dongle.write(list)
     })
 })
