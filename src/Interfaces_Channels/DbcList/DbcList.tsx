@@ -18,7 +18,7 @@ import {
 
 
 export type DbcFile = {
-    id: string | number
+    id: number
     name: string
     status: "available" | "used"
 }
@@ -48,11 +48,10 @@ const columns: ColumnDef<DbcFile>[] = [
     },
 ]
 
-export function DbcList() {
+export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList: (value: DbcFile[]) => void; }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-    const [dbcList, setDbcList] = React.useState<DbcFile[]>([])
 
     const table = useReactTable({
         data: dbcList,
@@ -69,10 +68,10 @@ export function DbcList() {
     })
 
     function addDbc() {
-        setDbcList(prevItems => [...prevItems, {
-            id: prevItems.length,
+        setDbcList([...dbcList, {
+            id: dbcList.length,
             status: "available",
-            name: "File " + prevItems.length
+            name: "File " + dbcList.length
         }])
     }
 

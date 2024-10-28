@@ -12,7 +12,7 @@ import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover.
 export type CanInterface = {
     id: string | number
     name: string
-    canChannel: string | null
+    canNetwork: string | null
     status: "available" | "used"
 }
 export type CanNetwork = {
@@ -20,7 +20,12 @@ export type CanNetwork = {
     label: string
 }
 
-export function ChannelSelector({selected, networkList}: { selected: string, networkList: CanNetwork[] }) {
+export function NetworkSelector({rowId, selected, networkList, handleDropdownChange}: {
+    rowId: number,
+    selected: string,
+    networkList: CanNetwork[],
+    handleDropdownChange: (id: number, value: string) => void
+}) {
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState(selected)
 
@@ -47,8 +52,10 @@ export function ChannelSelector({selected, networkList}: { selected: string, net
                                 key={network.id}
                                 value={network.id}
                                 onSelect={(currentValue) => {
-                                    setValue(currentValue === value ? "" : currentValue)
+                                    const newVal = currentValue === value ? "" : currentValue
+                                    setValue(newVal)
                                     setOpen(false)
+                                    handleDropdownChange(rowId, newVal)
                                 }}
                             >
                                 {network.label}

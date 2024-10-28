@@ -15,73 +15,66 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {CanInterface, CanNetwork, ChannelSelector} from "@/Interfaces_Channels/ChannelList/ChannelSelector.tsx";
+import {CanInterface, CanNetwork, NetworkSelector} from "@/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
 
 
-//FIXME maybe not stringId
-const networks: CanNetwork[] = [
-    {id: "0", label: "Network 0"},
-    {id: "1", label: "Network 1"},
-    {id: "2", label: "Network 2"},
-    {id: "3", label: "Network 3"},
-    {id: "4", label: "Network 4"},
-]
-
-const canInterfaces: CanInterface[] = [
-    {id: 0, status: "available", canChannel: null, name: "0 Kvaser Leaf Light v2"},
-    {id: 1, status: "available", canChannel: networks[0].id, name: "1 Kvaser Virtual CAN Driver"},
-    {id: 2, status: "available", canChannel: null, name: "2 Kvaser Virtual CAN Driver"},
-    {id: 3, status: "available", canChannel: networks[1].id, name: "3 Kvaser Virtual CAN Driver"},
-    {id: 4, status: "available", canChannel: null, name: "4 Kvaser Virtual CAN Driver"},
-    {id: 5, status: "available", canChannel: networks[2].id, name: "5 Kvaser Virtual CAN Driver"},
-    {id: 6, status: "available", canChannel: null, name: "6 Kvaser Virtual CAN Driver"},
-    {id: 7, status: "available", canChannel: null, name: "7 Kvaser Virtual CAN Driver"},
-    {id: 8, status: "available", canChannel: null, name: "8 Kvaser Virtual CAN Driver"},
-    {id: 9, status: "available", canChannel: null, name: "9 Kvaser Virtual CAN Driver"},
-    {id: 10, status: "available", canChannel: null, name: "10 Kvaser Virtual CAN Driver"},
-    {id: 11, status: "available", canChannel: null, name: "11 Kvaser Virtual CAN Driver"},
-    {id: 12, status: "available", canChannel: null, name: "12 Kvaser Virtual CAN Driver"},
-]
-
-const columns: ColumnDef<CanInterface>[] = [
-    {
-        accessorKey: "name", header: ({column}) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Interface
-                    <CaretSortIcon className="ml-2 h-4 w-4"/>
-                </Button>
-            )
-        }, cell: ({row}) => {
-            return (
-                <div className="lowercase">{row.getValue("name")}</div>
-            )
-        },
-    },
-    {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({row}) => (<div className="capitalize">{row.getValue("status")}</div>),
-    },
-    {
-        accessorKey: "canChannel", header: "Network", cell: ({row}) => {
-            return (
-                <ChannelSelector selected={row.getValue("canChannel")} networkList={networks}></ChannelSelector>
-            )
-        },
-    }
-]
-
-export function ChannelList() {
+export function ChannelList({interfaceList, setInterfaceList, networkList}: {
+    interfaceList: CanInterface[],
+    setInterfaceList: (value: CanInterface[]) => void;
+    networkList: CanNetwork[],
+}) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
 
+    const handleDropdownChange = (id: number, value: string) => {
+        setInterfaceList(interfaceList.map((item) => (item.id === id ? {...item, canNetwork: value} : item)));
+    };
+
+    const columns: ColumnDef<CanInterface>[] = [
+        {
+            accessorKey: "id",
+            header: "ID",
+            cell: ({row}) => (<div className="capitalize">{row.getValue("id")}</div>),
+        },
+        {
+            accessorKey: "name", header: ({column}) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Interface
+                        <CaretSortIcon className="ml-2 h-4 w-4"/>
+                    </Button>
+                )
+            }, cell: ({row}) => {
+                return (
+                    <div className="lowercase">{row.getValue("name")}</div>
+                )
+            },
+        },
+        {
+            accessorKey: "status",
+            header: "Status",
+            cell: ({row}) => (<div className="capitalize">{row.getValue("status")}</div>),
+        },
+        {
+            accessorKey: "canNetwork", header: "Network", cell: ({row}) => {
+                return (
+                    <NetworkSelector rowId={row.getValue("id")}
+                                     selected={row.getValue("canNetwork")}
+                                     networkList={networkList}
+                                     handleDropdownChange={handleDropdownChange}
+                    >
+                    </NetworkSelector>
+                )
+            },
+        }
+    ]
+
     const table = useReactTable({
-        data: canInterfaces,
+        data: interfaceList,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
