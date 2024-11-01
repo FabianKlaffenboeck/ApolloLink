@@ -79,7 +79,7 @@ export function Interfaces_Channels() {
             <ResizablePanel defaultSize={50}>
                 <ResizablePanelGroup direction="vertical">
                     <ResizablePanel defaultSize={50}>
-                        <div className="flex items-center justify-center p-6">
+                        <div className="flex h-full p-2">
                             <ChannelList
                                 interfaces={interfaces}
                                 setInterfaces={setInterfaces}
@@ -92,7 +92,7 @@ export function Interfaces_Channels() {
                     <ResizableHandle/>
 
                     <ResizablePanel defaultSize={50}>
-                        <div className="flex items-center justify-center p-6">
+                        <div className="flex h-full p-2">
                             <DbcList dbcList={dbcs} setDbcList={setDbcs}></DbcList>
                         </div>
                     </ResizablePanel>
@@ -102,7 +102,7 @@ export function Interfaces_Channels() {
             <ResizableHandle/>
 
             <ResizablePanel defaultSize={50}>
-                <div className="flex h-full items-center justify-center p-6">
+                <div className="flex h-full p-2">
                     <Nodes
                         networks={networks}
                         dbcs={dbcs}

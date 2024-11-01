@@ -34,7 +34,7 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
     function addNode() {
         setNodes([...nodes, {
             id: nodes.length,
-            label: "Node "+nodes.length,
+            label: "Node " + nodes.length,
             network: null,
             dbc: null
         }])
@@ -112,7 +112,7 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
     })
 
     return (
-        <div className="w-full">
+        <div className="w-full flex flex-col">
             <div>
                 <Input
                     placeholder="Filter by name..."
@@ -121,7 +121,7 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
                 />
             </div>
 
-            <div className="rounded-md border">
+            <div>
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (<TableRow key={headerGroup.id}>
@@ -146,6 +146,8 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
                     </TableBody>
                 </Table>
             </div>
+
+            <div className="flex-grow"></div>
 
             <div className="flex items-center justify-end space-x-2 py-4">
                 <div className="space-x-2">

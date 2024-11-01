@@ -89,7 +89,7 @@ export function ChannelList({interfaces, setInterfaces, networks}: {
     })
 
     return (
-        <div className="w-full">
+        <div className="w-full flex flex-col">
             <div>
                 <Input
                     placeholder="Filter by name..."
@@ -98,7 +98,7 @@ export function ChannelList({interfaces, setInterfaces, networks}: {
                 />
             </div>
 
-            <div className="rounded-md border">
+            <div>
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (<TableRow key={headerGroup.id}>
@@ -123,6 +123,8 @@ export function ChannelList({interfaces, setInterfaces, networks}: {
                     </TableBody>
                 </Table>
             </div>
+
+            <div className="flex-grow"></div>
 
             <div className="flex items-center justify-end space-x-2 py-4">
                 <div className="space-x-2">
