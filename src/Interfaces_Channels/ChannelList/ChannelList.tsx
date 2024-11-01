@@ -15,20 +15,21 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {CanInterface, CanNetwork, NetworkSelector} from "@/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
+import {CanInterface, CanNetwork} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
+import {NetworkSelector} from "@/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
 
 
-export function ChannelList({interfaceList, setInterfaceList, networkList}: {
-    interfaceList: CanInterface[],
-    setInterfaceList: (value: CanInterface[]) => void;
-    networkList: CanNetwork[],
+export function ChannelList({interfaces, setInterfaces, networks}: {
+    interfaces: CanInterface[],
+    setInterfaces: (value: CanInterface[]) => void;
+    networks: CanNetwork[],
 }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
 
-    const handleDropdownChange = (id: number, value: string) => {
-        setInterfaceList(interfaceList.map((item) => (item.id === id ? {...item, canNetwork: value} : item)));
+    const handleDropdownChange = (id: number, value: number) => {
+        setInterfaces(interfaces.map((item) => (item.id === id ? {...item, network: value} : item)));
     };
 
     const columns: ColumnDef<CanInterface>[] = [
@@ -38,19 +39,19 @@ export function ChannelList({interfaceList, setInterfaceList, networkList}: {
             cell: ({row}) => (<div className="capitalize">{row.getValue("id")}</div>),
         },
         {
-            accessorKey: "name", header: ({column}) => {
+            accessorKey: "label", header: ({column}) => {
                 return (
                     <Button
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
-                        Interface
+                        Channel
                         <CaretSortIcon className="ml-2 h-4 w-4"/>
                     </Button>
                 )
             }, cell: ({row}) => {
                 return (
-                    <div className="lowercase">{row.getValue("name")}</div>
+                    <div className="lowercase">{row.getValue("label")}</div>
                 )
             },
         },
@@ -60,11 +61,11 @@ export function ChannelList({interfaceList, setInterfaceList, networkList}: {
             cell: ({row}) => (<div className="capitalize">{row.getValue("status")}</div>),
         },
         {
-            accessorKey: "canNetwork", header: "Network", cell: ({row}) => {
+            accessorKey: "network", header: "Network", cell: ({row}) => {
                 return (
                     <NetworkSelector rowId={row.getValue("id")}
-                                     selected={row.getValue("canNetwork")}
-                                     networkList={networkList}
+                                     selected={row.getValue("network")}
+                                     networks={networks}
                                      handleDropdownChange={handleDropdownChange}
                     >
                     </NetworkSelector>
@@ -74,7 +75,7 @@ export function ChannelList({interfaceList, setInterfaceList, networkList}: {
     ]
 
     const table = useReactTable({
-        data: interfaceList,
+        data: interfaces,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
@@ -87,54 +88,56 @@ export function ChannelList({interfaceList, setInterfaceList, networkList}: {
         state: {sorting, columnFilters, columnVisibility},
     })
 
-    return (<div className="w-full">
-        <div>
-            <Input
-                placeholder="Filter by name..."
-                value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-                onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-            />
-        </div>
-
-        <div className="rounded-md border">
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (<TableRow key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => {
-                            return (<TableHead key={header.id}>
-                                {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                            </TableHead>)
-                        })}
-                    </TableRow>))}
-                </TableHeader>
-                <TableBody>
-                    {table.getRowModel().rows?.length ? (table.getRowModel().rows.map((row) => (
-                        <TableRow key={row.id}>
-                            {row.getVisibleCells().map((cell) => (<TableCell key={cell.id}>
-                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                            </TableCell>))}
-                        </TableRow>))) : (<TableRow>
-                        <TableCell colSpan={columns.length} className="h-24 text-center">
-                            No results.
-                        </TableCell>
-                    </TableRow>)}
-                </TableBody>
-            </Table>
-        </div>
-
-        <div className="flex items-center justify-end space-x-2 py-4">
-            <div className="space-x-2">
-                <Button variant="outline" size="sm" onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}>
-                    Previous
-                </Button>
-                <Button variant="outline" size="sm" onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}>
-                    Next
-                </Button>
+    return (
+        <div className="w-full">
+            <div>
+                <Input
+                    placeholder="Filter by name..."
+                    value={(table.getColumn("label")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) => table.getColumn("label")?.setFilterValue(event.target.value)}
+                />
             </div>
-        </div>
 
-    </div>)
+            <div className="rounded-md border">
+                <Table>
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (<TableRow key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => {
+                                return (<TableHead key={header.id}>
+                                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                </TableHead>)
+                            })}
+                        </TableRow>))}
+                    </TableHeader>
+                    <TableBody>
+                        {table.getRowModel().rows?.length ? (table.getRowModel().rows.map((row) => (
+                            <TableRow key={row.id}>
+                                {row.getVisibleCells().map((cell) => (<TableCell key={cell.id}>
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </TableCell>))}
+                            </TableRow>))) : (<TableRow>
+                            <TableCell colSpan={columns.length} className="h-24 text-center">
+                                No results.
+                            </TableCell>
+                        </TableRow>)}
+                    </TableBody>
+                </Table>
+            </div>
+
+            <div className="flex items-center justify-end space-x-2 py-4">
+                <div className="space-x-2">
+                    <Button variant="outline" size="sm" onClick={() => table.previousPage()}
+                            disabled={!table.getCanPreviousPage()}>
+                        Previous
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => table.nextPage()}
+                            disabled={!table.getCanNextPage()}>
+                        Next
+                    </Button>
+                </div>
+            </div>
+
+        </div>
+    )
 
 }

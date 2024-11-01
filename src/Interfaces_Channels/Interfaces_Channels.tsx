@@ -2,45 +2,74 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup,} from "@/components/ui/resizable.tsx"
 import {ChannelList} from "@/Interfaces_Channels/ChannelList/ChannelList.tsx";
-import {DbcFile, DbcList} from "@/Interfaces_Channels/DbcList/DbcList.tsx";
+import {DbcList} from "@/Interfaces_Channels/DbcList/DbcList.tsx";
 import {useState} from "react";
-import {CanInterface, CanNetwork} from "@/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
+import {Nodes} from "@/Interfaces_Channels/Nodes/Nodes.tsx";
 
+export type DbcFile = {
+    id: number
+    label: string
+    status: "available" | "used"
+}
 
-//FIXME maybe not stringId
-const networks: CanNetwork[] = [
-    {id: "0", label: "Network 0"},
-    {id: "1", label: "Network 1"},
-    {id: "2", label: "Network 2"},
-    {id: "3", label: "Network 3"},
-    {id: "4", label: "Network 4"},
-]
+export type CanNode = {
+    id: number
+    label: string
+    network: number | null
+    dbc: number | null
+}
 
-const canInterfaces: CanInterface[] = [
-    {id: 0, status: "available", canNetwork: null, name: "0 Kvaser Leaf Light v2"},
-    {id: 1, status: "available", canNetwork: networks[0].id, name: "1 Kvaser Virtual CAN Driver"},
-    {id: 2, status: "available", canNetwork: null, name: "2 Kvaser Virtual CAN Driver"},
-    {id: 3, status: "available", canNetwork: networks[1].id, name: "3 Kvaser Virtual CAN Driver"},
-    {id: 4, status: "available", canNetwork: null, name: "4 Kvaser Virtual CAN Driver"},
-    {id: 5, status: "available", canNetwork: networks[2].id, name: "5 Kvaser Virtual CAN Driver"},
-    {id: 6, status: "available", canNetwork: null, name: "6 Kvaser Virtual CAN Driver"},
-    {id: 7, status: "available", canNetwork: null, name: "7 Kvaser Virtual CAN Driver"},
-    {id: 8, status: "available", canNetwork: null, name: "8 Kvaser Virtual CAN Driver"},
-    {id: 9, status: "available", canNetwork: null, name: "9 Kvaser Virtual CAN Driver"},
-    {id: 10, status: "available", canNetwork: null, name: "10 Kvaser Virtual CAN Driver"},
-    {id: 11, status: "available", canNetwork: null, name: "11 Kvaser Virtual CAN Driver"},
-    {id: 12, status: "available", canNetwork: null, name: "12 Kvaser Virtual CAN Driver"},
+export type CanInterface = {
+    id: number
+    label: string
+    network: number | null
+    status: "available" | "used"
+}
+
+export type CanNetwork = {
+    id: number
+    label: string
+}
+
+const canNetworks: CanNetwork[] = [
+    {id: 0, label: "Network 00"},
+    {id: 1, label: "Network 01"},
+    {id: 2, label: "Network 02"},
+    {id: 3, label: "Network 03"},
+    {id: 4, label: "Network 04"},
 ]
 
 const dbcFiles: DbcFile[] = [{
-    id: 1, name: "string", status: "available"
+    id: 0, label: "DBC01", status: "available"
 }]
+
+const canNodes: CanNode[] = [{
+    id: 0, label: "Node01", network: canNetworks[0].id, dbc: dbcFiles[0].id
+}]
+
+const canInterfaces: CanInterface[] = [
+    {id: 0, status: "available", network: null, label: "0 Kvaser Leaf Light v2"},
+    {id: 1, status: "available", network: canNetworks[0].id, label: "1 Kvaser Virtual CAN Driver"},
+    {id: 2, status: "available", network: null, label: "2 Kvaser Virtual CAN Driver"},
+    {id: 3, status: "available", network: canNetworks[1].id, label: "3 Kvaser Virtual CAN Driver"},
+    {id: 4, status: "available", network: null, label: "4 Kvaser Virtual CAN Driver"},
+    {id: 5, status: "available", network: canNetworks[2].id, label: "5 Kvaser Virtual CAN Driver"},
+    {id: 6, status: "available", network: null, label: "6 Kvaser Virtual CAN Driver"},
+    {id: 7, status: "available", network: null, label: "7 Kvaser Virtual CAN Driver"},
+    {id: 8, status: "available", network: null, label: "8 Kvaser Virtual CAN Driver"},
+    {id: 9, status: "available", network: null, label: "9 Kvaser Virtual CAN Driver"},
+    {id: 10, status: "available", network: null, label: "10 Kvaser Virtual CAN Driver"},
+    {id: 11, status: "available", network: null, label: "11 Kvaser Virtual CAN Driver"},
+    {id: 12, status: "available", network: null, label: "12 Kvaser Virtual CAN Driver"},
+]
+
 
 export function Interfaces_Channels() {
 
-    const [interfaceList, setInterfaceList] = useState<CanInterface[]>(canInterfaces)
-    const [networkList, setNetworkList] = useState<CanNetwork[]>(networks)
-    const [dbcList, setDbcList] = useState<DbcFile[]>(dbcFiles)
+    const [interfaces, setInterfaces] = useState<CanInterface[]>(canInterfaces)
+    const [networks] = useState<CanNetwork[]>(canNetworks)
+    const [dbcs, setDbcs] = useState<DbcFile[]>(dbcFiles)
+    const [nodes, setNodes] = useState<CanNode[]>(canNodes)
 
 
     return (
@@ -52,10 +81,9 @@ export function Interfaces_Channels() {
                     <ResizablePanel defaultSize={50}>
                         <div className="flex items-center justify-center p-6">
                             <ChannelList
-                                interfaceList={interfaceList}
-                                setInterfaceList={setInterfaceList}
-                                networkList={networkList}
-                                setNetworkList={setNetworkList}
+                                interfaces={interfaces}
+                                setInterfaces={setInterfaces}
+                                networks={networks}
                             >
                             </ChannelList>
                         </div>
@@ -65,7 +93,7 @@ export function Interfaces_Channels() {
 
                     <ResizablePanel defaultSize={50}>
                         <div className="flex items-center justify-center p-6">
-                            <DbcList dbcList={dbcList} setDbcList={setDbcList}></DbcList>
+                            <DbcList dbcList={dbcs} setDbcList={setDbcs}></DbcList>
                         </div>
                     </ResizablePanel>
                 </ResizablePanelGroup>
@@ -74,8 +102,14 @@ export function Interfaces_Channels() {
             <ResizableHandle/>
 
             <ResizablePanel defaultSize={50}>
-                <div className="bg-amber-200 flex h-full items-center justify-center p-6">
-                    <span className="font-semibold">Nodes</span>
+                <div className="flex h-full items-center justify-center p-6">
+                    <Nodes
+                        networks={networks}
+                        dbcs={dbcs}
+                        nodes={nodes}
+                        setNodes={setNodes}
+                    >
+                    </Nodes>
                 </div>
             </ResizablePanel>
 

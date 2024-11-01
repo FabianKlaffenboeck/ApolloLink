@@ -15,59 +15,101 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {DbcFile} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
+import {DbcSelector} from "@/Interfaces_Channels/Nodes/DbcSelector.tsx";
+import {CanNetwork, CanNode, DbcFile} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
+import {NetworkSelector} from "@/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
 
-const columns: ColumnDef<DbcFile>[] = [
-    {
-        accessorKey: "label", header: ({column}) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    DbcFile
-                    <CaretSortIcon className="ml-2 h-4 w-4"/>
-                </Button>
-            )
-        }, cell: ({row}) => {
-            return (
-                <div className="lowercase">{row.getValue("label")}</div>
-            )
-        },
-    },
-    {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({row}) => (<div className="capitalize">{row.getValue("status")}</div>),
-    },
-]
 
-export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList: (value: DbcFile[]) => void; }) {
+export function Nodes({networks, dbcs, nodes, setNodes}: {
+    networks: CanNetwork[],
+    dbcs: DbcFile[],
+    nodes: CanNode[],
+    setNodes: (value: CanNode[]) => void;
+}) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
 
+
+    function addNode() {
+        setNodes([...nodes, {
+            id: nodes.length,
+            label: "Node "+nodes.length,
+            network: null,
+            dbc: null
+        }])
+    }
+
+    const handleNetworkChange = (id: number, value: number) => {
+        setNodes(nodes.map((item) => (item.id === id ? {...item, network: value} : item)));
+    };
+
+    const handleDbcChange = (id: number, value: number) => {
+        setNodes(nodes.map((item) => (item.id === id ? {...item, dbc: value} : item)));
+
+    };
+
+    const columns: ColumnDef<CanNode>[] = [
+        {
+            accessorKey: "id",
+            header: "ID",
+            cell: ({row}) => (<div className="capitalize">{row.getValue("id")}</div>),
+        },
+        {
+            accessorKey: "label", header: ({column}) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Node
+                        <CaretSortIcon className="ml-2 h-4 w-4"/>
+                    </Button>
+                )
+            }, cell: ({row}) => {
+                return (
+                    <div className="lowercase">{row.getValue("label")}</div>
+                )
+            },
+        },
+        {
+            accessorKey: "network", header: "Network", cell: ({row}) => {
+                return (
+                    <NetworkSelector rowId={row.getValue("id")}
+                                     selected={row.getValue("network")}
+                                     networks={networks}
+                                     handleDropdownChange={handleNetworkChange}
+                    >
+                    </NetworkSelector>
+                )
+            },
+        },
+        {
+            accessorKey: "dbc", header: "DBC", cell: ({row}) => {
+                return (
+                    <DbcSelector rowId={row.getValue("id")}
+                                 selected={row.getValue("dbc")}
+                                 dbcs={dbcs}
+                                 handleDropdownChange={handleDbcChange}
+                    >
+                    </DbcSelector>
+                )
+            },
+        }
+    ]
+
     const table = useReactTable({
-        data: dbcList,
+        data: nodes,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        initialState: {pagination: {pageSize: 5}},
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         state: {sorting, columnFilters, columnVisibility},
     })
-
-    function addDbc() {
-        setDbcList([...dbcList, {
-            id: dbcList.length,
-            status: "available",
-            label: "File " + dbcList.length
-        }])
-    }
 
     return (
         <div className="w-full">
@@ -115,11 +157,13 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
                             disabled={!table.getCanNextPage()}>
                         Next
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => addDbc()}>
-                        Add DBC
+                    <Button variant="outline" size="sm" onClick={() => addNode()}>
+                        Add Node
                     </Button>
                 </div>
             </div>
+
         </div>
     )
+
 }
