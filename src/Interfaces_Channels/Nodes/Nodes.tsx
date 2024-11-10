@@ -18,6 +18,7 @@ import {
 import {DbcSelector} from "@/Interfaces_Channels/Nodes/DbcSelector.tsx";
 import {CanNetwork, CanNode, DbcFile} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
 import {NetworkSelector} from "@/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
+import {MdOutlineDelete} from "react-icons/md";
 
 
 export function Nodes({networks, dbcs, nodes, setNodes}: {
@@ -49,6 +50,17 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
 
     };
 
+    const deleteHandler = (id: number) => {
+        setNodes(nodes.filter(d => d.id != id))
+    };
+
+    const handleNameInput = (id: number, val: string) => {
+        setNodes(nodes.map((item) =>
+                item.id === id ? {...item, label: val} : item
+            )
+        );
+    }
+
     const columns: ColumnDef<CanNode>[] = [
         {
             accessorKey: "id",
@@ -66,9 +78,12 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
                         <CaretSortIcon className="ml-2 h-4 w-4"/>
                     </Button>
                 )
-            }, cell: ({row}) => {
+            }, cell: ({row,getValue}) => {
                 return (
-                    <div className="lowercase">{row.getValue("label")}</div>
+                    <Input value={getValue<string>()}
+                           onChange={event =>
+                               handleNameInput(row.getValue("id"), event.target.value)}
+                    />
                 )
             },
         },
@@ -95,7 +110,19 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
                     </DbcSelector>
                 )
             },
-        }
+        },
+        {
+            accessorKey: "delete",
+            header: "",
+            cell: ({row}) => (
+                <Button variant="ghost"
+                        size="icon"
+                        className="rounded-lg bg-muted"
+                        onClick={() => deleteHandler(row.getValue("id"))}>
+                    <MdOutlineDelete className="size-5"/>
+                </Button>
+            ),
+        },
     ]
 
     const table = useReactTable({

@@ -16,36 +16,69 @@ import {
     VisibilityState,
 } from "@tanstack/react-table"
 import {DbcFile} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
+import {MdOutlineDelete} from "react-icons/md";
 
-const columns: ColumnDef<DbcFile>[] = [
-    {
-        accessorKey: "label", header: ({column}) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    DbcFile
-                    <CaretSortIcon className="ml-2 h-4 w-4"/>
-                </Button>
-            )
-        }, cell: ({row}) => {
-            return (
-                <div className="lowercase">{row.getValue("label")}</div>
-            )
-        },
-    },
-    {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({row}) => (<div className="capitalize">{row.getValue("status")}</div>),
-    },
-]
 
 export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList: (value: DbcFile[]) => void; }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+
+    const deleteHandler = (id: number) => {
+        setDbcList(dbcList.filter(d => d.id != id))
+    };
+
+    const handleNameInput = (id: number, val: string) => {
+        setDbcList(dbcList.map((item) =>
+                item.id === id ? {...item, label: val} : item
+            )
+        );
+    }
+
+    const columns: ColumnDef<DbcFile>[] = [
+        {
+            accessorKey: "id",
+            header: "ID",
+            cell: ({row}) => (<div className="capitalize">{row.getValue("id")}</div>),
+        },
+        {
+            accessorKey: "label", header: ({column}) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        DbcFile
+                        <CaretSortIcon className="ml-2 h-4 w-4"/>
+                    </Button>
+                )
+            }, cell: ({row, getValue}) => {
+                return (
+                    <Input value={getValue<string>()}
+                           onChange={event =>
+                               handleNameInput(row.getValue("id"), event.target.value)}
+                    />
+                )
+            },
+        },
+        {
+            accessorKey: "status",
+            header: "Status",
+            cell: ({row}) => (<div className="capitalize">{row.getValue("status")}</div>),
+        },
+        {
+            accessorKey: "delete",
+            header: "",
+            cell: ({row}) => (
+                <Button variant="ghost"
+                        size="icon"
+                        className="rounded-lg bg-muted"
+                        onClick={() => deleteHandler(row.getValue("id"))}>
+                    <MdOutlineDelete className="size-5"/>
+                </Button>
+            ),
+        },
+    ]
 
     const table = useReactTable({
         data: dbcList,
