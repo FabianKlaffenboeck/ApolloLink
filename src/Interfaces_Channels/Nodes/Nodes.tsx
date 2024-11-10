@@ -18,6 +18,7 @@ import {
 import {DbcSelector} from "@/Interfaces_Channels/Nodes/DbcSelector.tsx";
 import {CanNetwork, CanNode, DbcFile} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
 import {NetworkSelector} from "@/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
+import {MdOutlineDelete} from "react-icons/md";
 
 
 export function Nodes({networks, dbcs, nodes, setNodes}: {
@@ -47,6 +48,10 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
     const handleDbcChange = (id: number, value: number) => {
         setNodes(nodes.map((item) => (item.id === id ? {...item, dbc: value} : item)));
 
+    };
+
+    const deleteHandler = (id: number) => {
+        setNodes(nodes.filter(d => d.id != id))
     };
 
     const columns: ColumnDef<CanNode>[] = [
@@ -95,7 +100,19 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
                     </DbcSelector>
                 )
             },
-        }
+        },
+        {
+            accessorKey: "delete",
+            header: "",
+            cell: ({row}) => (
+                <Button variant="ghost"
+                        size="icon"
+                        className="rounded-lg bg-muted"
+                        onClick={() => deleteHandler(row.getValue("id"))}>
+                    <MdOutlineDelete className="size-5"/>
+                </Button>
+            ),
+        },
     ]
 
     const table = useReactTable({

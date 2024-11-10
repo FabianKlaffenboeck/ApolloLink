@@ -17,6 +17,7 @@ import {
 } from "@tanstack/react-table"
 import {CanInterface, CanNetwork} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
 import {NetworkSelector} from "@/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
+import {MdOutlineDelete} from "react-icons/md";
 
 
 export function ChannelList({interfaces, setInterfaces, networks}: {
@@ -30,6 +31,10 @@ export function ChannelList({interfaces, setInterfaces, networks}: {
 
     const handleDropdownChange = (id: number, value: number) => {
         setInterfaces(interfaces.map((item) => (item.id === id ? {...item, network: value} : item)));
+    };
+
+    const deleteHandler = (id: number) => {
+        setInterfaces(interfaces.filter(d => d.id != id))
     };
 
     const columns: ColumnDef<CanInterface>[] = [
@@ -71,7 +76,19 @@ export function ChannelList({interfaces, setInterfaces, networks}: {
                     </NetworkSelector>
                 )
             },
-        }
+        },
+        {
+            accessorKey: "delete",
+            header: "",
+            cell: ({row}) => (
+                <Button variant="ghost"
+                        size="icon"
+                        className="rounded-lg bg-muted"
+                        onClick={() => deleteHandler(row.getValue("id"))}>
+                    <MdOutlineDelete className="size-5"/>
+                </Button>
+            ),
+        },
     ]
 
     const table = useReactTable({
