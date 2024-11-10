@@ -28,6 +28,13 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
         setDbcList(dbcList.filter(d => d.id != id))
     };
 
+    const handleNameInput = (id: number, val: string) => {
+        setDbcList(dbcList.map((item) =>
+                item.id === id ? {...item, label: val} : item
+            )
+        );
+    }
+
     const columns: ColumnDef<DbcFile>[] = [
         {
             accessorKey: "id",
@@ -45,9 +52,12 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
                         <CaretSortIcon className="ml-2 h-4 w-4"/>
                     </Button>
                 )
-            }, cell: ({row}) => {
+            }, cell: ({row, getValue}) => {
                 return (
-                    <div className="lowercase">{row.getValue("label")}</div>
+                    <Input value={getValue<string>()}
+                           onChange={event =>
+                               handleNameInput(row.getValue("id"), event.target.value)}
+                    />
                 )
             },
         },

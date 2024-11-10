@@ -54,6 +54,13 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
         setNodes(nodes.filter(d => d.id != id))
     };
 
+    const handleNameInput = (id: number, val: string) => {
+        setNodes(nodes.map((item) =>
+                item.id === id ? {...item, label: val} : item
+            )
+        );
+    }
+
     const columns: ColumnDef<CanNode>[] = [
         {
             accessorKey: "id",
@@ -71,9 +78,12 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
                         <CaretSortIcon className="ml-2 h-4 w-4"/>
                     </Button>
                 )
-            }, cell: ({row}) => {
+            }, cell: ({row,getValue}) => {
                 return (
-                    <div className="lowercase">{row.getValue("label")}</div>
+                    <Input value={getValue<string>()}
+                           onChange={event =>
+                               handleNameInput(row.getValue("id"), event.target.value)}
+                    />
                 )
             },
         },
