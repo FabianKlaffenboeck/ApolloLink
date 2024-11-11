@@ -29,13 +29,14 @@ export function ChannelList({interfaces, setInterfaces, networks}: {
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
 
-    const handleDropdownChange = (id: number, value: number) => {
-        setInterfaces(interfaces.map((item) => (item.id === id ? {...item, network: value} : item)));
-    };
 
-    const deleteHandler = (id: number) => {
+    function handleDropdownChange(id: number, value: number) {
+        setInterfaces(interfaces.map((item) => (item.id === id ? {...item, network: value} : item)));
+    }
+
+    function deleteHandler(id: number) {
         setInterfaces(interfaces.filter(d => d.id != id))
-    };
+    }
 
     const columns: ColumnDef<CanInterface>[] = [
         {

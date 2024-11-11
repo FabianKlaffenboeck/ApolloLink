@@ -41,20 +41,20 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
         }])
     }
 
-    const handleNetworkChange = (id: number, value: number) => {
+    function handleNetworkChange(id: number, value: number) {
         setNodes(nodes.map((item) => (item.id === id ? {...item, network: value} : item)));
-    };
+    }
 
-    const handleDbcChange = (id: number, value: number) => {
+    function handleDbcChange(id: number, value: number) {
         setNodes(nodes.map((item) => (item.id === id ? {...item, dbc: value} : item)));
 
-    };
+    }
 
-    const deleteHandler = (id: number) => {
+    function deleteHandler(id: number) {
         setNodes(nodes.filter(d => d.id != id))
-    };
+    }
 
-    const handleNameInput = (id: number, val: string) => {
+    function handleNameInput(id: number, val: string) {
         setNodes(nodes.map((item) =>
                 item.id === id ? {...item, label: val} : item
             )
@@ -78,7 +78,7 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
                         <CaretSortIcon className="ml-2 h-4 w-4"/>
                     </Button>
                 )
-            }, cell: ({row,getValue}) => {
+            }, cell: ({row, getValue}) => {
                 return (
                     <Input value={getValue<string>()}
                            onChange={event =>
@@ -194,5 +194,4 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
 
         </div>
     )
-
 }

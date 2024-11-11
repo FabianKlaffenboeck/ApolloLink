@@ -1,4 +1,5 @@
 import * as React from "react"
+import {useRef} from "react"
 import {Button} from "@/components/ui/button.tsx"
 import {Input} from "@/components/ui/input.tsx"
 import {CaretSortIcon} from "@radix-ui/react-icons"
@@ -18,21 +19,47 @@ import {
 import {DbcFile} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
 import {MdOutlineDelete} from "react-icons/md";
 
-
 export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList: (value: DbcFile[]) => void; }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-    const deleteHandler = (id: number) => {
+
+    function deleteHandler(id: number) {
         setDbcList(dbcList.filter(d => d.id != id))
-    };
+    }
 
-    const handleNameInput = (id: number, val: string) => {
+    function handleNameChange(id: number, val: string) {
         setDbcList(dbcList.map((item) =>
                 item.id === id ? {...item, label: val} : item
             )
         );
+    }
+
+    function addDbcButtonClick() {
+        fileInputRef.current?.click();
+    }
+
+    function onFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files?.[0];
+
+        if (!file) {
+            return
+        }
+
+        const reader = new FileReader();
+        reader.readAsText(file)
+
+        reader.onload = () => {
+            setDbcList([...dbcList, {
+                id: dbcList.length,
+                status: "available",
+                fileContent: reader.result as string,
+                label: file.name
+            }])
+        };
+
     }
 
     const columns: ColumnDef<DbcFile>[] = [
@@ -56,7 +83,7 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
                 return (
                     <Input value={getValue<string>()}
                            onChange={event =>
-                               handleNameInput(row.getValue("id"), event.target.value)}
+                               handleNameChange(row.getValue("id"), event.target.value)}
                     />
                 )
             },
@@ -94,13 +121,6 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
         state: {sorting, columnFilters, columnVisibility},
     })
 
-    function addDbc() {
-        setDbcList([...dbcList, {
-            id: dbcList.length,
-            status: "available",
-            label: "File " + dbcList.length
-        }])
-    }
 
     return (
         <div className="w-full flex flex-col">
@@ -150,7 +170,9 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
                             disabled={!table.getCanNextPage()}>
                         Next
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => addDbc()}>
+
+                    <input type="file" ref={fileInputRef} onChange={onFileUpload} style={{display: "none"}}/>
+                    <Button variant="outline" size="sm" onClick={addDbcButtonClick}>
                         Add DBC
                     </Button>
                 </div>

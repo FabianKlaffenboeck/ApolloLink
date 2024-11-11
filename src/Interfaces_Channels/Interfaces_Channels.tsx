@@ -9,6 +9,7 @@ import {Nodes} from "@/Interfaces_Channels/Nodes/Nodes.tsx";
 export type DbcFile = {
     id: number
     label: string
+    fileContent: string
     status: "available" | "used"
 }
 
@@ -40,7 +41,7 @@ const canNetworks: CanNetwork[] = [
 ]
 
 const dbcFiles: DbcFile[] = [{
-    id: 0, label: "DBC01", status: "available"
+    id: 0, label: "C:\\fakepath\\TRAXON_RemotControl.dbc\n", fileContent: "", status: "available"
 }]
 
 const canNodes: CanNode[] = [{
