@@ -6,6 +6,7 @@ import {DbcList} from "@/Interfaces_Channels/DbcList/DbcList.tsx";
 import {useEffect, useState} from "react";
 import {Nodes} from "@/Interfaces_Channels/Nodes/Nodes.tsx";
 import {Dbc} from "candied";
+import {CanState} from "@/SideBar.tsx";
 
 export type DbcFile = {
     id: number
@@ -67,17 +68,16 @@ const canInterfaces: CanInterface[] = [
 ]
 
 
-export function Interfaces_Channels() {
+export function Interfaces_Channels({busState}: { busState: CanState }) {
 
     const [interfaces, setInterfaces] = useState<CanInterface[]>(canInterfaces)
     const [networks] = useState<CanNetwork[]>(canNetworks)
     const [dbcs, setDbcs] = useState<DbcFile[]>(dbcFiles)
     const [nodes, setNodes] = useState<CanNode[]>(canNodes)
 
-
     useEffect(() => {
         console.log("dbcs state has changed:", dbcs);
-        dbcs.forEach(it =>{
+        dbcs.forEach(it => {
             console.log(it.dbcObj?.data.messages);
         })
     }, [dbcs]);
@@ -91,6 +91,7 @@ export function Interfaces_Channels() {
                     <ResizablePanel defaultSize={50}>
                         <div className="flex h-full p-2">
                             <ChannelList
+                                busState={busState}
                                 interfaces={interfaces}
                                 setInterfaces={setInterfaces}
                                 networks={networks}
@@ -103,7 +104,12 @@ export function Interfaces_Channels() {
 
                     <ResizablePanel defaultSize={50}>
                         <div className="flex h-full p-2">
-                            <DbcList dbcList={dbcs} setDbcList={setDbcs}></DbcList>
+                            <DbcList
+                                busState={busState}
+                                dbcList={dbcs}
+                                setDbcList={setDbcs}
+                            >
+                            </DbcList>
                         </div>
                     </ResizablePanel>
                 </ResizablePanelGroup>
@@ -114,6 +120,7 @@ export function Interfaces_Channels() {
             <ResizablePanel defaultSize={50}>
                 <div className="flex h-full p-2">
                     <Nodes
+                        busState={busState}
                         networks={networks}
                         dbcs={dbcs}
                         nodes={nodes}

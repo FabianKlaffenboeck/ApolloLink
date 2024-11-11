@@ -19,8 +19,13 @@ import {
 import {DbcFile} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
 import {MdOutlineDelete} from "react-icons/md";
 import {Dbc} from "candied";
+import {CanState} from "@/SideBar.tsx";
 
-export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList: (value: DbcFile[]) => void; }) {
+export function DbcList({busState, dbcList, setDbcList}: {
+    busState: CanState
+    dbcList: DbcFile[],
+    setDbcList: (value: DbcFile[]) => void;
+}) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -78,6 +83,7 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
             accessorKey: "label", header: ({column}) => {
                 return (
                     <Button
+                        disabled={busState == "ONLINE"}
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
@@ -87,9 +93,11 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
                 )
             }, cell: ({row, getValue}) => {
                 return (
-                    <Input value={getValue<string>()}
-                           onChange={event =>
-                               handleNameChange(row.getValue("id"), event.target.value)}
+                    <Input
+                        disabled={busState == "ONLINE"}
+                        value={getValue<string>()}
+                        onChange={event =>
+                            handleNameChange(row.getValue("id"), event.target.value)}
                     />
                 )
             },
@@ -103,10 +111,12 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
             accessorKey: "delete",
             header: "",
             cell: ({row}) => (
-                <Button variant="ghost"
-                        size="icon"
-                        className="rounded-lg bg-muted"
-                        onClick={() => deleteHandler(row.getValue("id"))}>
+                <Button
+                    disabled={busState == "ONLINE"}
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-lg bg-muted"
+                    onClick={() => deleteHandler(row.getValue("id"))}>
                     <MdOutlineDelete className="size-5"/>
                 </Button>
             ),
@@ -168,18 +178,27 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
 
             <div className="flex items-center justify-end space-x-2 py-4">
                 <div className="space-x-2">
-                    <Button variant="outline" size="sm" onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}>
                         Previous
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => table.nextPage()}
-                            disabled={!table.getCanNextPage()}>
+                    <Button
+                        variant="outline" size="sm" onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}>
                         Next
                     </Button>
-
-                    <input type="file" ref={fileInputRef} onChange={onFileUpload} accept=".dbc"
-                           style={{display: "none"}}/>
-                    <Button variant="outline" size="sm" onClick={addDbcButtonClick}>
+                    <input
+                        disabled={busState == "ONLINE"}
+                        type="file" ref={fileInputRef}
+                        onChange={onFileUpload}
+                        accept=".dbc"
+                        style={{display: "none"}}/>
+                    <Button
+                        disabled={busState == "ONLINE"}
+                        variant="outline" size="sm" onClick={addDbcButtonClick}>
                         Add DBC
                     </Button>
                 </div>

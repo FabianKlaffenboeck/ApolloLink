@@ -3,7 +3,7 @@ import LogoFKLab_Light from './assets/LogoFKLab_Light.svg'
 import LogoFKLab_Dark from './assets/LogoFKLab_Dark.svg'
 import {Theme, useTheme} from "@/components/theme-provider.tsx";
 import ComponentGrid, {AddTileRef} from "@/Dashboard.tsx";
-import {SideBar} from "@/SideBar.tsx";
+import {CanState, SideBar} from "@/SideBar.tsx";
 import {HeaderBar, TabValue} from "@/HeaderBar.tsx";
 import {useRef, useState} from "react";
 import {Interfaces_Channels} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
@@ -13,6 +13,7 @@ export function MainPage() {
 
     const addTileTrigger = useRef<AddTileRef>(null);
     const [tab, setTab] = useState<TabValue>("DASBOARD");
+    const [busState, setBusState] = useState<CanState>("OFFLINE")
 
     const choseLogoIcon = (themeProviderState: Theme) => {
         if (themeProviderState == "light") {
@@ -41,7 +42,10 @@ export function MainPage() {
                     <div className="border-b p-2">
                         {choseLogoIcon(useTheme().theme)}
                     </div>
-                    <SideBar tap={tab} onAddVisualisationItem={handleAddVisualisationItem}/>
+                    <SideBar
+                        busState={busState}
+                        setBusState={setBusState} tap={tab}
+                        onAddVisualisationItem={handleAddVisualisationItem}/>
                 </aside>
 
                 <div className="flex flex-col">
@@ -56,7 +60,9 @@ export function MainPage() {
 
                         <div className="flex h-full col-span-3"
                              style={{display: (tab == "INTERFACES") ? 'block' : 'none'}}>
-                            <Interfaces_Channels></Interfaces_Channels>
+                            <Interfaces_Channels
+                                busState={busState}
+                            ></Interfaces_Channels>
                         </div>
 
                     </main>

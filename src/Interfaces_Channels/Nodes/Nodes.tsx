@@ -19,9 +19,11 @@ import {DbcSelector} from "@/Interfaces_Channels/Nodes/DbcSelector.tsx";
 import {CanNetwork, CanNode, DbcFile} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
 import {NetworkSelector} from "@/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
 import {MdOutlineDelete} from "react-icons/md";
+import {CanState} from "@/SideBar.tsx";
 
 
-export function Nodes({networks, dbcs, nodes, setNodes}: {
+export function Nodes({busState, networks, dbcs, nodes, setNodes}: {
+    busState: CanState
     networks: CanNetwork[],
     dbcs: DbcFile[],
     nodes: CanNode[],
@@ -70,10 +72,12 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
         {
             accessorKey: "network", header: "Network", cell: ({row}) => {
                 return (
-                    <NetworkSelector rowId={row.getValue("id")}
-                                     selected={row.getValue("network")}
-                                     networks={networks}
-                                     handleDropdownChange={handleNetworkChange}
+                    <NetworkSelector
+                        disabled={busState == "ONLINE"}
+                        rowId={row.getValue("id")}
+                        selected={row.getValue("network")}
+                        networks={networks}
+                        handleDropdownChange={handleNetworkChange}
                     >
                     </NetworkSelector>
                 )
@@ -83,6 +87,7 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
             accessorKey: "label", header: ({column}) => {
                 return (
                     <Button
+                        disabled={busState == "ONLINE"}
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
@@ -92,9 +97,11 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
                 )
             }, cell: ({row, getValue}) => {
                 return (
-                    <Input value={getValue<string>()}
-                           onChange={event =>
-                               handleNameInput(row.getValue("id"), event.target.value)}
+                    <Input
+                        disabled={busState == "ONLINE"}
+                        value={getValue<string>()}
+                        onChange={event =>
+                            handleNameInput(row.getValue("id"), event.target.value)}
                     />
                 )
             },
@@ -102,10 +109,12 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
         {
             accessorKey: "dbc", header: "DBC", cell: ({row}) => {
                 return (
-                    <DbcSelector rowId={row.getValue("id")}
-                                 selected={row.getValue("dbc")}
-                                 dbcs={dbcs}
-                                 handleDropdownChange={handleDbcChange}
+                    <DbcSelector
+                        disabled={busState == "ONLINE"}
+                        rowId={row.getValue("id")}
+                        selected={row.getValue("dbc")}
+                        dbcs={dbcs}
+                        handleDropdownChange={handleDbcChange}
                     >
                     </DbcSelector>
                 )
@@ -115,10 +124,12 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
             accessorKey: "delete",
             header: "",
             cell: ({row}) => (
-                <Button variant="ghost"
-                        size="icon"
-                        className="rounded-lg bg-muted"
-                        onClick={() => deleteHandler(row.getValue("id"))}>
+                <Button
+                    disabled={busState == "ONLINE"}
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-lg bg-muted"
+                    onClick={() => deleteHandler(row.getValue("id"))}>
                     <MdOutlineDelete className="size-5"/>
                 </Button>
             ),
@@ -178,15 +189,24 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
 
             <div className="flex items-center justify-end space-x-2 py-4">
                 <div className="space-x-2">
-                    <Button variant="outline" size="sm" onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}>
+                    <Button
+                        variant="outline"
+                        size="sm" onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}>
                         Previous
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => table.nextPage()}
-                            disabled={!table.getCanNextPage()}>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}>
                         Next
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => addNode()}>
+                    <Button
+                        disabled={busState == "ONLINE"}
+                        variant="outline"
+                        size="sm"
+                        onClick={() => addNode()}>
                         Add Node
                     </Button>
                 </div>

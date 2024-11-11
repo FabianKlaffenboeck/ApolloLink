@@ -9,7 +9,8 @@ import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandL
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover.tsx"
 import {CanNetwork} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
 
-export function NetworkSelector({rowId, selected, networks, handleDropdownChange}: {
+export function NetworkSelector({disabled, rowId, selected, networks, handleDropdownChange}: {
+    disabled: boolean
     rowId: number,
     selected: number,
     networks: CanNetwork[],
@@ -20,7 +21,7 @@ export function NetworkSelector({rowId, selected, networks, handleDropdownChange
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
+            <PopoverTrigger disabled={disabled} asChild>
                 <Button
                     variant="outline"
                     role="combobox"

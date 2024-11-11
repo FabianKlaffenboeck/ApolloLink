@@ -6,21 +6,23 @@ import {GoGraph} from "react-icons/go";
 import {VscDebugStart, VscDebugStop, VscEmptyWindow, VscSymbolVariable} from "react-icons/vsc";
 import {GiDigitalTrace} from "react-icons/gi";
 import {TabValue} from "@/HeaderBar.tsx";
-import * as React from "react";
 
 export type Visualisation = "TRACE" | "TABLE" | "GRAPH" | "VALUE"
 export type CanState = "ONLINE" | "OFFLINE"
 
-export function SideBar({tap, onAddVisualisationItem}: {
+
+export function SideBar({tap, onAddVisualisationItem, busState, setBusState}: {
     tap: TabValue,
     onAddVisualisationItem: (message: Visualisation) => void;
+    busState: CanState
+    setBusState: (value: CanState) => void;
 }) {
-    const [busState, setBusState] = React.useState<CanState>("OFFLINE")
 
-    function goOnline(){
+    function goOnline() {
         setBusState("ONLINE")
     }
-    function goOffline(){
+
+    function goOffline() {
         setBusState("OFFLINE")
     }
 

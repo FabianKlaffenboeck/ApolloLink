@@ -9,7 +9,8 @@ import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandL
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover.tsx"
 import {DbcFile} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
 
-export function DbcSelector({rowId, selected, dbcs, handleDropdownChange}: {
+export function DbcSelector({disabled, rowId, selected, dbcs, handleDropdownChange}: {
+    disabled: boolean
     rowId: number,
     selected: number,
     dbcs: DbcFile[],
@@ -21,7 +22,7 @@ export function DbcSelector({rowId, selected, dbcs, handleDropdownChange}: {
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
+            <PopoverTrigger disabled={disabled} asChild>
                 <Button
                     variant="outline"
                     role="combobox"
@@ -38,21 +39,23 @@ export function DbcSelector({rowId, selected, dbcs, handleDropdownChange}: {
                     <CommandList>
                         <CommandEmpty>No Network found.</CommandEmpty>
                         <CommandGroup>
-                            {dbcs.map((dbc) => (<CommandItem
-                                key={dbc.id}
-                                value={String(dbc.id)}
-                                onSelect={(currentValue) => {
-                                    const newVal = Number(currentValue) === value ? -1 : Number(currentValue)
-                                    setValue(newVal)
-                                    setOpen(false)
-                                    handleDropdownChange(rowId, Number(newVal))
-                                }}
-                            >
-                                {dbc.label}
-                                <CheckIcon
-                                    className={cn("ml-auto h-4 w-4", value === dbc.id ? "opacity-100" : "opacity-0")}
-                                />
-                            </CommandItem>))}
+                            {dbcs.map((dbc) => (
+                                <CommandItem
+                                    key={dbc.id}
+                                    value={String(dbc.id)}
+                                    onSelect={(currentValue) => {
+                                        const newVal = Number(currentValue) === value ? -1 : Number(currentValue)
+                                        setValue(newVal)
+                                        setOpen(false)
+                                        handleDropdownChange(rowId, Number(newVal))
+                                    }}
+                                >
+                                    {dbc.label}
+                                    <CheckIcon
+                                        className={cn("ml-auto h-4 w-4", value === dbc.id ? "opacity-100" : "opacity-0")}
+                                    />
+                                </CommandItem>))
+                            }
                         </CommandGroup>
                     </CommandList>
                 </Command>
