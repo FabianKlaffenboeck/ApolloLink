@@ -171,7 +171,7 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
                         Next
                     </Button>
 
-                    <input type="file" ref={fileInputRef} onChange={onFileUpload} style={{display: "none"}}/>
+                    <input type="file" ref={fileInputRef} onChange={onFileUpload}  accept=".dbc" style={{display: "none"}}/>
                     <Button variant="outline" size="sm" onClick={addDbcButtonClick}>
                         Add DBC
                     </Button>

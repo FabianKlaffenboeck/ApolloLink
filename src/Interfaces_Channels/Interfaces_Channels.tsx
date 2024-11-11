@@ -3,7 +3,7 @@ import "react-resizable/css/styles.css";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup,} from "@/components/ui/resizable.tsx"
 import {ChannelList} from "@/Interfaces_Channels/ChannelList/ChannelList.tsx";
 import {DbcList} from "@/Interfaces_Channels/DbcList/DbcList.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Nodes} from "@/Interfaces_Channels/Nodes/Nodes.tsx";
 
 export type DbcFile = {
@@ -72,6 +72,10 @@ export function Interfaces_Channels() {
     const [dbcs, setDbcs] = useState<DbcFile[]>(dbcFiles)
     const [nodes, setNodes] = useState<CanNode[]>(canNodes)
 
+
+    useEffect(() => {
+        console.log("dbcs state has changed:", dbcs);
+    }, [dbcs]);
 
     return (
         <ResizablePanelGroup
