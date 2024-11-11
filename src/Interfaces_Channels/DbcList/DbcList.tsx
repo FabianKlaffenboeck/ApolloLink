@@ -18,6 +18,7 @@ import {
 } from "@tanstack/react-table"
 import {DbcFile} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
 import {MdOutlineDelete} from "react-icons/md";
+import {Dbc} from "candied";
 
 export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList: (value: DbcFile[]) => void; }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
@@ -52,10 +53,15 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
         reader.readAsText(file)
 
         reader.onload = () => {
+
+            const dbc: Dbc = new Dbc();
+            dbc.load(reader.result as string)
+
             setDbcList([...dbcList, {
                 id: dbcList.length,
                 status: "available",
                 fileContent: reader.result as string,
+                dbcObj: dbc,
                 label: file.name
             }])
         };
@@ -171,7 +177,8 @@ export function DbcList({dbcList, setDbcList}: { dbcList: DbcFile[], setDbcList:
                         Next
                     </Button>
 
-                    <input type="file" ref={fileInputRef} onChange={onFileUpload}  accept=".dbc" style={{display: "none"}}/>
+                    <input type="file" ref={fileInputRef} onChange={onFileUpload} accept=".dbc"
+                           style={{display: "none"}}/>
                     <Button variant="outline" size="sm" onClick={addDbcButtonClick}>
                         Add DBC
                     </Button>

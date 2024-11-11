@@ -5,11 +5,13 @@ import {ChannelList} from "@/Interfaces_Channels/ChannelList/ChannelList.tsx";
 import {DbcList} from "@/Interfaces_Channels/DbcList/DbcList.tsx";
 import {useEffect, useState} from "react";
 import {Nodes} from "@/Interfaces_Channels/Nodes/Nodes.tsx";
+import {Dbc} from "candied";
 
 export type DbcFile = {
     id: number
     label: string
     fileContent: string
+    dbcObj: Dbc | null
     status: "available" | "used"
 }
 
@@ -41,7 +43,7 @@ const canNetworks: CanNetwork[] = [
 ]
 
 const dbcFiles: DbcFile[] = [{
-    id: 0, label: "C:\\fakepath\\TRAXON_RemotControl.dbc\n", fileContent: "", status: "available"
+    id: 0, label: "C:\\fakepath\\TRAXON_RemotControl.dbc\n", fileContent: "", dbcObj: null, status: "available"
 }]
 
 const canNodes: CanNode[] = [{
@@ -75,6 +77,9 @@ export function Interfaces_Channels() {
 
     useEffect(() => {
         console.log("dbcs state has changed:", dbcs);
+        dbcs.forEach(it =>{
+            console.log(it.dbcObj?.data.messages);
+        })
     }, [dbcs]);
 
     return (
