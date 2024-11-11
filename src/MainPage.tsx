@@ -41,7 +41,7 @@ export function MainPage() {
                     <div className="border-b p-2">
                         {choseLogoIcon(useTheme().theme)}
                     </div>
-                    <SideBar onAddVisualisationItem={handleAddVisualisationItem}/>
+                    <SideBar tap={tab} onAddVisualisationItem={handleAddVisualisationItem}/>
                 </aside>
 
                 <div className="flex flex-col">

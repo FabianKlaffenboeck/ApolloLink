@@ -68,6 +68,18 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
             cell: ({row}) => (<div className="capitalize">{row.getValue("id")}</div>),
         },
         {
+            accessorKey: "network", header: "Network", cell: ({row}) => {
+                return (
+                    <NetworkSelector rowId={row.getValue("id")}
+                                     selected={row.getValue("network")}
+                                     networks={networks}
+                                     handleDropdownChange={handleNetworkChange}
+                    >
+                    </NetworkSelector>
+                )
+            },
+        },
+        {
             accessorKey: "label", header: ({column}) => {
                 return (
                     <Button
@@ -84,18 +96,6 @@ export function Nodes({networks, dbcs, nodes, setNodes}: {
                            onChange={event =>
                                handleNameInput(row.getValue("id"), event.target.value)}
                     />
-                )
-            },
-        },
-        {
-            accessorKey: "network", header: "Network", cell: ({row}) => {
-                return (
-                    <NetworkSelector rowId={row.getValue("id")}
-                                     selected={row.getValue("network")}
-                                     networks={networks}
-                                     handleDropdownChange={handleNetworkChange}
-                    >
-                    </NetworkSelector>
                 )
             },
         },
