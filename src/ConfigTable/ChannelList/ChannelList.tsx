@@ -15,8 +15,8 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {CanInterface, CanNetwork} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
-import {NetworkSelector} from "@/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
+import {CanInterface, CanNetwork} from "@/Tabs/Interfaces_Channels.tsx";
+import {NetworkSelector} from "@/ConfigTable/ChannelList/NetworkSelector.tsx";
 import {MdOutlineDelete} from "react-icons/md";
 import {CanState} from "@/SideBar.tsx";
 

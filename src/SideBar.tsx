@@ -8,13 +8,13 @@ import {GiDigitalTrace} from "react-icons/gi";
 import {TabValue} from "@/HeaderBar.tsx";
 import {CanMessage} from "@fklab/candongle-interface";
 
-export type Visualisation = "TRACE" | "TABLE" | "GRAPH" | "VALUE"
+export type VisualisationType = "TRACE" | "TABLE" | "GRAPH" | "VALUE"
 export type CanState = "ONLINE" | "OFFLINE"
 
 
 export function SideBar({tap, onAddVisualisationItem, busState, setBusState}: {
     tap: TabValue,
-    onAddVisualisationItem: (message: Visualisation) => void;
+    onAddVisualisationItem: (message: VisualisationType) => void;
     busState: CanState
     setBusState: (value: CanState) => void;
 }) {
@@ -22,7 +22,7 @@ export function SideBar({tap, onAddVisualisationItem, busState, setBusState}: {
 
     function goOnline() {
         window.electron.goOnBus();
-        window.electron.setCanMsgCallback((msg:CanMessage) => {
+        window.electron.setCanMsgCallback((msg: CanMessage) => {
             console.log(msg);
         })
 

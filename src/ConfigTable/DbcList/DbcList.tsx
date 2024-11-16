@@ -16,7 +16,7 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {DbcFile} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
+import {DbcFile} from "@/Tabs/Interfaces_Channels.tsx";
 import {MdOutlineDelete} from "react-icons/md";
 import {Dbc} from "candied";
 import {CanState} from "@/SideBar.tsx";

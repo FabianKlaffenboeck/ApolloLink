@@ -2,11 +2,11 @@ import {TooltipProvider,} from "@/components/ui/tooltip"
 import LogoFKLab_Light from './assets/LogoFKLab_Light.svg'
 import LogoFKLab_Dark from './assets/LogoFKLab_Dark.svg'
 import {Theme, useTheme} from "@/components/theme-provider.tsx";
-import ComponentGrid, {AddTileRef} from "@/Dashboard.tsx";
-import {CanState, SideBar} from "@/SideBar.tsx";
+import VisualisationGrid, {AddTileRef} from "@/Tabs/Dashboard.tsx";
+import {CanState, SideBar, VisualisationType} from "@/SideBar.tsx";
 import {HeaderBar, TabValue} from "@/HeaderBar.tsx";
 import {useRef, useState} from "react";
-import {Interfaces_Channels} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
+import {Interfaces_Channels} from "@/Tabs/Interfaces_Channels.tsx";
 
 
 export function MainPage() {
@@ -23,17 +23,15 @@ export function MainPage() {
         }
     }
 
-
     const handleTabChange = (selected: TabValue) => {
         setTab(selected);
     };
 
-    const handleAddVisualisationItem = (message: string) => {
+    const handleAddVisualisationItem = (message: VisualisationType) => {
         if (addTileTrigger.current) {
             addTileTrigger.current.addTile(message);
         }
     };
-
 
     return (
         <TooltipProvider>
@@ -55,7 +53,10 @@ export function MainPage() {
 
                         <div className="flex h-full flex-col rounded-xl bg-muted/50 p-4 col-span-3"
                              style={{display: (tab == "DASBOARD") ? 'block' : 'none'}}>
-                            <ComponentGrid ref={addTileTrigger}></ComponentGrid>
+                            <VisualisationGrid
+                                busState={busState}
+                                ref={addTileTrigger}
+                            ></VisualisationGrid>
                         </div>
 
                         <div className="flex h-full col-span-3"

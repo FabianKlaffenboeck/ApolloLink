@@ -1,10 +1,10 @@
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup,} from "@/components/ui/resizable.tsx"
-import {ChannelList} from "@/Interfaces_Channels/ChannelList/ChannelList.tsx";
-import {DbcList} from "@/Interfaces_Channels/DbcList/DbcList.tsx";
+import {ChannelList} from "@/ConfigTable/ChannelList/ChannelList.tsx";
+import {DbcList} from "@/ConfigTable/DbcList/DbcList.tsx";
 import {useEffect, useState} from "react";
-import {Nodes} from "@/Interfaces_Channels/Nodes/Nodes.tsx";
+import {Nodes} from "@/ConfigTable/Nodes/Nodes.tsx";
 import {Dbc} from "candied";
 import {CanState} from "@/SideBar.tsx";
 
