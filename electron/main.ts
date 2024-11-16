@@ -92,7 +92,7 @@ ipcMain.on('start-canBus', (event) => {
         }
 
         event.sender.send('onCanMsg-callback', msg);
-    }, 1);
+    }, 100);
 });
 
 ipcMain.on('stop-canBus', () => {

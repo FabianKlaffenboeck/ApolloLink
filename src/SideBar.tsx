@@ -4,9 +4,8 @@ import {CiViewTable} from "react-icons/ci";
 import {LifeBuoy} from "lucide-react";
 import {GoGraph} from "react-icons/go";
 import {VscDebugStart, VscDebugStop, VscEmptyWindow, VscSymbolVariable} from "react-icons/vsc";
-import {GiDigitalTrace} from "react-icons/gi";
 import {TabValue} from "@/HeaderBar.tsx";
-import {CanMessage} from "@fklab/candongle-interface";
+import {CgRowLast} from "react-icons/cg";
 
 export type VisualisationType = "TRACE" | "TABLE" | "GRAPH" | "VALUE"
 export type CanState = "ONLINE" | "OFFLINE"
@@ -19,13 +18,8 @@ export function SideBar({tap, onAddVisualisationItem, busState, setBusState}: {
     setBusState: (value: CanState) => void;
 }) {
 
-
     function goOnline() {
         window.electron.goOnBus();
-        window.electron.setCanMsgCallback((msg: CanMessage) => {
-            console.log(msg);
-        })
-
         setBusState("ONLINE")
     }
 
@@ -40,14 +34,14 @@ export function SideBar({tap, onAddVisualisationItem, busState, setBusState}: {
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
-                            disabled={tap == "INTERFACES"}
+                            disabled={(tap == "INTERFACES") || (busState == "ONLINE")}
                             variant="ghost"
                             size="icon"
                             className="rounded-lg bg-muted"
                             aria-label="Playground"
                             onClick={() => onAddVisualisationItem("TRACE")}
                         >
-                            <GiDigitalTrace className="size-5"/>
+                            <CgRowLast className="size-5"/>
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={5}>
@@ -58,7 +52,7 @@ export function SideBar({tap, onAddVisualisationItem, busState, setBusState}: {
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
-                            disabled={tap == "INTERFACES"}
+                            disabled={(tap == "INTERFACES") || (busState == "ONLINE")}
                             variant="ghost"
                             size="icon"
                             className="rounded-lg bg-muted"
@@ -76,7 +70,7 @@ export function SideBar({tap, onAddVisualisationItem, busState, setBusState}: {
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
-                            disabled={tap == "INTERFACES"}
+                            disabled={(tap == "INTERFACES") || (busState == "ONLINE")}
                             variant="ghost"
                             size="icon"
                             className="rounded-lg bg-muted"
@@ -94,7 +88,7 @@ export function SideBar({tap, onAddVisualisationItem, busState, setBusState}: {
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
-                            disabled={tap == "INTERFACES"}
+                            disabled={(tap == "INTERFACES") || (busState == "ONLINE")}
                             variant="ghost"
                             size="icon"
                             className="rounded-lg bg-muted"
