@@ -75,8 +75,22 @@ let interval: NodeJS.Timeout | null = null
 
 ipcMain.on('start-canBus', (event) => {
     interval = setInterval(() => {
-        const randomNumber = Math.floor(Math.random() * 100);
-        const msg: CanMessage = {id: randomNumber, dlc: 0, data: []}
+        const msg: CanMessage = {
+
+            id: Math.floor(Math.random() * 100),
+            dlc: 8,
+            data: [
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+            ]
+        }
+
         event.sender.send('onCanMsg-callback', msg);
     }, 1);
 });
