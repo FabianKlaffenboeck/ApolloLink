@@ -1,10 +1,10 @@
-import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,} from "@/components/ui/tooltip"
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,} from "@/components/ui/tooltip.tsx"
 import {Button} from "@/components/ui/button.tsx";
 import {CiViewTable} from "react-icons/ci";
 import {LifeBuoy} from "lucide-react";
 import {GoGraph} from "react-icons/go";
 import {VscDebugStart, VscDebugStop, VscEmptyWindow, VscSymbolVariable} from "react-icons/vsc";
-import {TabValue} from "@/HeaderBar.tsx";
+import {TabValue} from "@/Bars/HeaderBar.tsx";
 import {CgRowLast} from "react-icons/cg";
 
 export type VisualisationType = "TRACE" | "TABLE" | "GRAPH" | "VALUE"

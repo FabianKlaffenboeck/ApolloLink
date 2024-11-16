@@ -15,73 +15,36 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {DbcSelector} from "@/ConfigTable/Nodes/DbcSelector.tsx";
-import {CanNetwork, CanNode, DbcFile} from "@/Tabs/Interfaces_Channels.tsx";
-import {NetworkSelector} from "@/ConfigTable/ChannelList/NetworkSelector.tsx";
+import {CanInterface, CanNetwork} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
+import {NetworkSelector} from "@/Tabs/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
 import {MdOutlineDelete} from "react-icons/md";
-import {CanState} from "@/SideBar.tsx";
+import {CanState} from "@/Bars/SideBar.tsx";
 
 
-export function Nodes({busState, networks, dbcs, nodes, setNodes}: {
+export function ChannelList({busState, interfaces, setInterfaces, networks}: {
     busState: CanState
+    interfaces: CanInterface[],
+    setInterfaces: (value: CanInterface[]) => void;
     networks: CanNetwork[],
-    dbcs: DbcFile[],
-    nodes: CanNode[],
-    setNodes: (value: CanNode[]) => void;
 }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
 
 
-    function addNode() {
-        setNodes([...nodes, {
-            id: nodes.length,
-            label: "Node " + nodes.length,
-            network: null,
-            dbc: null
-        }])
-    }
-
-    function handleNetworkChange(id: number, value: number) {
-        setNodes(nodes.map((item) => (item.id === id ? {...item, network: value} : item)));
-    }
-
-    function handleDbcChange(id: number, value: number) {
-        setNodes(nodes.map((item) => (item.id === id ? {...item, dbc: value} : item)));
-
+    function handleDropdownChange(id: number, value: number) {
+        setInterfaces(interfaces.map((item) => (item.id === id ? {...item, network: value} : item)));
     }
 
     function deleteHandler(id: number) {
-        setNodes(nodes.filter(d => d.id != id))
+        setInterfaces(interfaces.filter(d => d.id != id))
     }
 
-    function handleNameInput(id: number, val: string) {
-        setNodes(nodes.map((item) =>
-                item.id === id ? {...item, label: val} : item
-            )
-        );
-    }
-
-    const columns: ColumnDef<CanNode>[] = [
+    const columns: ColumnDef<CanInterface>[] = [
         {
             accessorKey: "id",
             header: "ID",
             cell: ({row}) => (<div className="capitalize">{row.getValue("id")}</div>),
-        },
-        {
-            accessorKey: "network", header: "Network", cell: ({row}) => {
-                return (
-                    <NetworkSelector
-                        disabled={busState == "ONLINE"}
-                        rowId={row.getValue("id")}
-                        selected={row.getValue("network")}
-                        networks={networks}
-                        handleDropdownChange={handleNetworkChange}
-                    >
-                    </NetworkSelector>
-                )
-            },
         },
         {
             accessorKey: "label", header: ({column}) => {
@@ -91,32 +54,32 @@ export function Nodes({busState, networks, dbcs, nodes, setNodes}: {
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
-                        Node
+                        Channel
                         <CaretSortIcon className="ml-2 h-4 w-4"/>
                     </Button>
                 )
-            }, cell: ({row, getValue}) => {
+            }, cell: ({row}) => {
                 return (
-                    <Input
-                        disabled={busState == "ONLINE"}
-                        value={getValue<string>()}
-                        onChange={event =>
-                            handleNameInput(row.getValue("id"), event.target.value)}
-                    />
+                    <div className="lowercase">{row.getValue("label")}</div>
                 )
             },
         },
         {
-            accessorKey: "dbc", header: "DBC", cell: ({row}) => {
+            accessorKey: "status",
+            header: "Status",
+            cell: ({row}) => (<div className="capitalize">{row.getValue("status")}</div>),
+        },
+        {
+            accessorKey: "network", header: "Network", cell: ({row}) => {
                 return (
-                    <DbcSelector
+                    <NetworkSelector
                         disabled={busState == "ONLINE"}
                         rowId={row.getValue("id")}
-                        selected={row.getValue("dbc")}
-                        dbcs={dbcs}
-                        handleDropdownChange={handleDbcChange}
+                        selected={row.getValue("network")}
+                        networks={networks}
+                        handleDropdownChange={handleDropdownChange}
                     >
-                    </DbcSelector>
+                    </NetworkSelector>
                 )
             },
         },
@@ -137,12 +100,13 @@ export function Nodes({busState, networks, dbcs, nodes, setNodes}: {
     ]
 
     const table = useReactTable({
-        data: nodes,
+        data: interfaces,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        initialState: {pagination: {pageSize: 5}},
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
@@ -189,29 +153,18 @@ export function Nodes({busState, networks, dbcs, nodes, setNodes}: {
 
             <div className="flex items-center justify-end space-x-2 py-4">
                 <div className="space-x-2">
-                    <Button
-                        variant="outline"
-                        size="sm" onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}>
+                    <Button variant="outline" size="sm" onClick={() => table.previousPage()}
+                            disabled={!table.getCanPreviousPage()}>
                         Previous
                     </Button>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}>
+                    <Button variant="outline" size="sm" onClick={() => table.nextPage()}
+                            disabled={!table.getCanNextPage()}>
                         Next
-                    </Button>
-                    <Button
-                        disabled={busState == "ONLINE"}
-                        variant="outline"
-                        size="sm"
-                        onClick={() => addNode()}>
-                        Add Node
                     </Button>
                 </div>
             </div>
 
         </div>
     )
+
 }

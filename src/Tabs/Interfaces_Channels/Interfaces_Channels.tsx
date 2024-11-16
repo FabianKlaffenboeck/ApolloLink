@@ -1,12 +1,12 @@
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup,} from "@/components/ui/resizable.tsx"
-import {ChannelList} from "@/ConfigTable/ChannelList/ChannelList.tsx";
-import {DbcList} from "@/ConfigTable/DbcList/DbcList.tsx";
+import {ChannelList} from "@/Tabs/Interfaces_Channels/ChannelList/ChannelList.tsx";
+import {DbcList} from "@/Tabs/Interfaces_Channels/DbcList/DbcList.tsx";
 import {useEffect, useState} from "react";
-import {Nodes} from "@/ConfigTable/Nodes/Nodes.tsx";
+import {Nodes} from "@/Tabs/Interfaces_Channels/Nodes/Nodes.tsx";
 import {Dbc} from "candied";
-import {CanState} from "@/SideBar.tsx";
+import {CanState} from "@/Bars/SideBar.tsx";
 
 export type DbcFile = {
     id: number
@@ -44,7 +44,7 @@ const canNetworks: CanNetwork[] = [
 ]
 
 const dbcFiles: DbcFile[] = [{
-    id: 0, label: "C:\\fakepath\\TRAXON_RemotControl.dbc\n", fileContent: "", dbcObj: null, status: "available"
+    id: 0, label: "TRAXON_RemotControl.dbc", fileContent: "", dbcObj: null, status: "available"
 }]
 
 const canNodes: CanNode[] = [{

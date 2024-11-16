@@ -2,11 +2,11 @@ import {TooltipProvider,} from "@/components/ui/tooltip"
 import LogoFKLab_Light from './assets/LogoFKLab_Light.svg'
 import LogoFKLab_Dark from './assets/LogoFKLab_Dark.svg'
 import {Theme, useTheme} from "@/components/theme-provider.tsx";
-import VisualisationGrid, {AddTileRef} from "@/Tabs/Dashboard.tsx";
-import {CanState, SideBar, VisualisationType} from "@/SideBar.tsx";
-import {HeaderBar, TabValue} from "@/HeaderBar.tsx";
+import VisualisationGrid, {AddTileRef} from "@/Tabs/Dashboard/Dashboard.tsx";
+import {CanState, SideBar, VisualisationType} from "@/Bars/SideBar.tsx";
+import {HeaderBar, TabValue} from "@/Bars/HeaderBar.tsx";
 import {useRef, useState} from "react";
-import {Interfaces_Channels} from "@/Tabs/Interfaces_Channels.tsx";
+import {Interfaces_Channels} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
 
 
 export function MainPage() {
@@ -27,7 +27,7 @@ export function MainPage() {
         setTab(selected);
     };
 
-    const handleAddVisualisationItem = (message: VisualisationType) => {
+    const addTile = (message: VisualisationType) => {
         if (addTileTrigger.current) {
             addTileTrigger.current.addTile(message);
         }
@@ -43,7 +43,7 @@ export function MainPage() {
                     <SideBar
                         busState={busState}
                         setBusState={setBusState} tap={tab}
-                        onAddVisualisationItem={handleAddVisualisationItem}/>
+                        onAddVisualisationItem={addTile}/>
                 </aside>
 
                 <div className="flex flex-col">

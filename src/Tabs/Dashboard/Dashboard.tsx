@@ -2,12 +2,12 @@ import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
-import {CanState, VisualisationType} from "@/SideBar.tsx";
+import {CanState, VisualisationType} from "@/Bars/SideBar.tsx";
 import {v4 as uuidv4} from 'uuid';
-import {TRACE} from "@/VisualisationTiles/TRACE.tsx";
-import {TABLE} from "@/VisualisationTiles/TABLE.tsx";
-import {GRAPH} from "@/VisualisationTiles/GRAPH.tsx";
-import {VALUE} from "@/VisualisationTiles/VALUE.tsx";
+import {TRACE} from "@/Tabs/Dashboard/VisualisationTiles/TRACE.tsx";
+import {TABLE} from "@/Tabs/Dashboard/VisualisationTiles/TABLE.tsx";
+import {GRAPH} from "@/Tabs/Dashboard/VisualisationTiles/GRAPH.tsx";
+import {VALUE} from "@/Tabs/Dashboard/VisualisationTiles/VALUE.tsx";
 
 interface Tile {
     i: string;
@@ -59,6 +59,11 @@ const VisualisationGrid = ({busState}: { busState: CanState; }, addTileRef: Reac
         setTileCount(tileCount + 1);
     }
 
+    function deleteTile(id: string) {
+        setTiles(tiles.filter((tile) => tile.id !== id));
+        setLayout(layout.filter((tile) => tile.i !== id));
+    }
+
     function renderTile(tile: Tile) {
         const tileHandle = tiles.find(it => it.id == tile.i)
 
@@ -84,7 +89,7 @@ const VisualisationGrid = ({busState}: { busState: CanState; }, addTileRef: Reac
             case "VALUE":
                 return (
                     <div key={tile.i}>
-                        <VALUE></VALUE>
+                        <VALUE id={tile.i} removeHook={deleteTile}></VALUE>
                     </div>
                 )
             default:
@@ -107,7 +112,7 @@ const VisualisationGrid = ({busState}: { busState: CanState; }, addTileRef: Reac
                 cols={10}
                 rowHeight={Math.floor(window.innerHeight / 10)}
                 onLayoutChange={(newLayout) => setLayout(newLayout)}
-                isDraggable={busState== "OFFLINE"}
+                isDraggable={busState == "OFFLINE"}
             >
                 {layout.map((tile) => (renderTile(tile)))}
             </GridLayout>

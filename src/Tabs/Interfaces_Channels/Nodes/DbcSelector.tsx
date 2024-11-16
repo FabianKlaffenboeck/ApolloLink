@@ -7,7 +7,7 @@ import {cn} from "@/lib/utils.ts"
 import {Button} from "@/components/ui/button.tsx"
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList,} from "@/components/ui/command.tsx"
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover.tsx"
-import {DbcFile} from "@/Tabs/Interfaces_Channels.tsx";
+import {DbcFile} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
 
 export function DbcSelector({disabled, rowId, selected, dbcs, handleDropdownChange}: {
     disabled: boolean
