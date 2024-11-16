@@ -8,6 +8,8 @@ lint:
   stage: test
   image: node:22
   before_script:
+    - echo "@fklab:registry=https://${CI_SERVER_HOST}/api/v4/packages/npm/" >> .npmrc
+    - echo "//${CI_SERVER_HOST}/api/v4/packages/npm/:_authToken=${NPM_TOKEN}" >> .npmrc
     - npm install
   script:
     - npm run lint
@@ -16,6 +18,8 @@ build-windows:
   stage: build
   image: electronuserland/builder:wine
   before_script:
+    - echo "@fklab:registry=https://${CI_SERVER_HOST}/api/v4/packages/npm/" >> .npmrc
+    - echo "//${CI_SERVER_HOST}/api/v4/packages/npm/:_authToken=${NPM_TOKEN}" >> .npmrc
     - npm install
   script:
     - npm run build-win
@@ -33,6 +37,8 @@ build-linux:
   image: node:22
   before_script:
     - apt-get update -y && apt-get install -y libgtk-3-dev libxss1 libasound2
+    - echo "@fklab:registry=https://${CI_SERVER_HOST}/api/v4/packages/npm/" >> .npmrc
+    - echo "//${CI_SERVER_HOST}/api/v4/packages/npm/:_authToken=${NPM_TOKEN}" >> .npmrc
     - npm install
   script:
     - npm run build-linux
