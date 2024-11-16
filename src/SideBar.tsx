@@ -6,6 +6,7 @@ import {GoGraph} from "react-icons/go";
 import {VscDebugStart, VscDebugStop, VscEmptyWindow, VscSymbolVariable} from "react-icons/vsc";
 import {GiDigitalTrace} from "react-icons/gi";
 import {TabValue} from "@/HeaderBar.tsx";
+import {CanMessage} from "@fklab/candongle-interface";
 
 export type Visualisation = "TRACE" | "TABLE" | "GRAPH" | "VALUE"
 export type CanState = "ONLINE" | "OFFLINE"
@@ -18,11 +19,18 @@ export function SideBar({tap, onAddVisualisationItem, busState, setBusState}: {
     setBusState: (value: CanState) => void;
 }) {
 
+
     function goOnline() {
+        window.electron.goOnBus();
+        window.electron.setCanMsgCallback((msg:CanMessage) => {
+            console.log(msg);
+        })
+
         setBusState("ONLINE")
     }
 
     function goOffline() {
+        window.electron.goOffBus();
         setBusState("OFFLINE")
     }
 
