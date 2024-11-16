@@ -6,14 +6,26 @@ import VisualisationGrid, {AddTileRef} from "@/Tabs/Dashboard/Dashboard.tsx";
 import {CanState, SideBar, VisualisationType} from "@/Bars/SideBar.tsx";
 import {HeaderBar, TabValue} from "@/Bars/HeaderBar.tsx";
 import {useRef, useState} from "react";
-import {Interfaces_Channels} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
+import {
+    CanInterface,
+    CanNetwork, CanNode,
+    DbcFile,
+    Interfaces_Channels
+} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
+import {canInterfaces, canNetworks, canNodes, dbcFiles} from "@/MockData.ts";
 
 
 export function MainPage() {
 
     const addTileTrigger = useRef<AddTileRef>(null);
-    const [tab, setTab] = useState<TabValue>("DASBOARD");
+    const [currentTap, setCurrentTap] = useState<TabValue>("DASBOARD");
     const [busState, setBusState] = useState<CanState>("OFFLINE")
+
+    const [interfaces, setInterfaces] = useState<CanInterface[]>(canInterfaces)
+    const [networks] = useState<CanNetwork[]>(canNetworks)
+    const [dbcs, setDbcs] = useState<DbcFile[]>(dbcFiles)
+    const [nodes, setNodes] = useState<CanNode[]>(canNodes)
+
 
     const choseLogoIcon = (themeProviderState: Theme) => {
         if (themeProviderState == "light") {
@@ -24,7 +36,7 @@ export function MainPage() {
     }
 
     const handleTabChange = (selected: TabValue) => {
-        setTab(selected);
+        setCurrentTap(selected);
     };
 
     const addTile = (message: VisualisationType) => {
@@ -42,7 +54,7 @@ export function MainPage() {
                     </div>
                     <SideBar
                         busState={busState}
-                        setBusState={setBusState} tap={tab}
+                        setBusState={setBusState} tap={currentTap}
                         onAddVisualisationItem={addTile}/>
                 </aside>
 
@@ -52,16 +64,26 @@ export function MainPage() {
                     <main className="grid flex-1 gap-4 overflow-auto p-4 grid-cols-3 ">
 
                         <div className="flex h-full flex-col rounded-xl bg-muted/50 p-4 col-span-3"
-                             style={{display: (tab == "DASBOARD") ? 'block' : 'none'}}>
+                             style={{display: (currentTap == "DASBOARD") ? 'block' : 'none'}}>
                             <VisualisationGrid
+                                networks={networks}
+                                dbcs={dbcs}
+                                nodes={nodes}
                                 busState={busState}
                                 ref={addTileTrigger}
                             ></VisualisationGrid>
                         </div>
 
                         <div className="flex h-full col-span-3"
-                             style={{display: (tab == "INTERFACES") ? 'block' : 'none'}}>
+                             style={{display: (currentTap == "INTERFACES") ? 'block' : 'none'}}>
                             <Interfaces_Channels
+                                interfaces={interfaces}
+                                networks={networks}
+                                dbcs={dbcs}
+                                nodes={nodes}
+                                setInterfaces={setInterfaces}
+                                setDbcs={setDbcs}
+                                setNodes={setNodes}
                                 busState={busState}
                             ></Interfaces_Channels>
                         </div>

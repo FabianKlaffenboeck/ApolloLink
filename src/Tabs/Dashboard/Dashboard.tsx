@@ -8,6 +8,7 @@ import {TRACE} from "@/Tabs/Dashboard/VisualisationTiles/TRACE.tsx";
 import {TABLE} from "@/Tabs/Dashboard/VisualisationTiles/TABLE.tsx";
 import {GRAPH} from "@/Tabs/Dashboard/VisualisationTiles/GRAPH.tsx";
 import {VALUE} from "@/Tabs/Dashboard/VisualisationTiles/VALUE.tsx";
+import {CanNetwork, CanNode, DbcFile} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
 
 interface Tile {
     i: string;
@@ -26,7 +27,12 @@ export interface AddTileRef {
     addTile: (type: VisualisationType) => void,
 }
 
-const VisualisationGrid = ({busState}: { busState: CanState; }, addTileRef: React.Ref<AddTileRef>) => {
+const VisualisationGrid = ({dbcs, busState}: {
+    networks: CanNetwork[],
+    dbcs: DbcFile[],
+    nodes: CanNode[],
+    busState: CanState;
+}, addTileRef: React.Ref<AddTileRef>) => {
 
     const [width, setWidth] = useState<number>(window.innerWidth - 100);
     const [layout, setLayout] = useState<Tile[]>([])
@@ -71,25 +77,38 @@ const VisualisationGrid = ({busState}: { busState: CanState; }, addTileRef: Reac
             case "TRACE" :
                 return (
                     <div key={tile.i}>
-                        <TRACE></TRACE>
+                        <TRACE
+                            id={tile.i}
+                            removeHook={deleteTile}
+                        ></TRACE>
                     </div>
                 )
             case "TABLE":
                 return (
                     <div key={tile.i}>
-                        <TABLE></TABLE>
+                        <TABLE
+                            id={tile.i}
+                            removeHook={deleteTile}
+                        ></TABLE>
                     </div>
                 )
             case "GRAPH":
                 return (
                     <div key={tile.i}>
-                        <GRAPH></GRAPH>
+                        <GRAPH
+                            id={tile.i}
+                            removeHook={deleteTile}
+                        ></GRAPH>
                     </div>
                 )
             case "VALUE":
                 return (
                     <div key={tile.i}>
-                        <VALUE id={tile.i} removeHook={deleteTile}></VALUE>
+                        <VALUE
+                            id={tile.i}
+                            removeHook={deleteTile}
+                            dbcs={dbcs}
+                        ></VALUE>
                     </div>
                 )
             default:

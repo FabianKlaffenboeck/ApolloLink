@@ -1,12 +1,13 @@
 import {CanMessage} from "@fklab/candongle-interface";
 import {useState} from "react";
 import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} from "@/components/ui/context-menu.tsx";
-import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle,} from "@/components/ui/dialog.tsx";
-import {Button} from "@/components/ui/button.tsx";
+import {SignalSelector} from "@/Tabs/Dashboard/VisualisationTiles/SignalSelector.tsx";
+import {DbcFile} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
 
-export function VALUE({id, removeHook}: {
+export function VALUE({id, removeHook,dbcs}: {
     id: string
-    removeHook: (id:string) => void;
+    removeHook: (id: string) => void;
+    dbcs: DbcFile[]
 }) {
     const [value, setValue] = useState<number | null>(null);
     const [openSelector, setOpenSelector] = useState<boolean>(false);
@@ -18,47 +19,54 @@ export function VALUE({id, removeHook}: {
         }
     })
 
-    function renderSelector() {
+    // function renderSelector() {
+    //
+    //     return (
+    //         <Dialog open={openSelector}>
+    //             <DialogContent className="sm:max-w-[425px]">
+    //                 <DialogHeader>
+    //                     <DialogTitle>Signal Selector</DialogTitle>
+    //                     {/*<DialogDescription>*/}
+    //                     {/*    Make changes to your profile here. Click save when you're done.*/}
+    //                     {/*</DialogDescription>*/}
+    //                 </DialogHeader>
+    //                 {/*<div className="grid gap-4 py-4">*/}
+    //                 {/*    <div className="grid grid-cols-4 items-center gap-4">*/}
+    //                 {/*        <Label htmlFor="name" className="text-right">*/}
+    //                 {/*            Name*/}
+    //                 {/*        </Label>*/}
+    //                 {/*        <Input id="name" value="Pedro Duarte" className="col-span-3" />*/}
+    //                 {/*    </div>*/}
+    //                 {/*    <div className="grid grid-cols-4 items-center gap-4">*/}
+    //                 {/*        <Label htmlFor="username" className="text-right">*/}
+    //                 {/*            Username*/}
+    //                 {/*        </Label>*/}
+    //                 {/*        <Input id="username" value="@peduarte" className="col-span-3" />*/}
+    //                 {/*    </div>*/}
+    //                 {/*</div>*/}
+    //                 <DialogFooter>
+    //                     <Button
+    //                         type="submit"
+    //                         onClick={() => setOpenSelector(false)}
+    //                     >Save</Button>
+    //                 </DialogFooter>
+    //             </DialogContent>
+    //         </Dialog>
+    //     )
+    // }
 
-        return (
-            <Dialog open={openSelector}>
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <DialogTitle>Signal Selector</DialogTitle>
-                        {/*<DialogDescription>*/}
-                        {/*    Make changes to your profile here. Click save when you're done.*/}
-                        {/*</DialogDescription>*/}
-                    </DialogHeader>
-                    {/*<div className="grid gap-4 py-4">*/}
-                    {/*    <div className="grid grid-cols-4 items-center gap-4">*/}
-                    {/*        <Label htmlFor="name" className="text-right">*/}
-                    {/*            Name*/}
-                    {/*        </Label>*/}
-                    {/*        <Input id="name" value="Pedro Duarte" className="col-span-3" />*/}
-                    {/*    </div>*/}
-                    {/*    <div className="grid grid-cols-4 items-center gap-4">*/}
-                    {/*        <Label htmlFor="username" className="text-right">*/}
-                    {/*            Username*/}
-                    {/*        </Label>*/}
-                    {/*        <Input id="username" value="@peduarte" className="col-span-3" />*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-                    <DialogFooter>
-                        <Button
-                            type="submit"
-                            onClick={() => setOpenSelector(false)}
-                        >Save</Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
-        )
+    function selectorClose() {
+
     }
 
     return (
         <div className="bg-background text-foreground w-full h-full flex items-center justify-center">
-
-            {renderSelector()}
-
+            <SignalSelector
+                openSelector={openSelector}
+                setOpenSelector={setOpenSelector}
+                closeHook={selectorClose}
+                dbcs={dbcs}
+            ></SignalSelector>
             <ContextMenu>
                 <ContextMenuTrigger
                     className="flex w-full h-full items-center justify-center rounded-md border border-dashed text-sm">
