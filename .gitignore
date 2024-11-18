@@ -8,12 +8,13 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+release
 dist
 dist-electron
 dist-ssr
 *.local
 
-# Editor directories and files
+# Editor dire^ctories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
