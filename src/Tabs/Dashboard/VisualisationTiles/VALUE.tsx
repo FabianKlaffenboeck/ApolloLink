@@ -1,6 +1,13 @@
 import {CanMessage} from "@fklab/candongle-interface";
-import {useEffect, useState} from "react";
-import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} from "@/components/ui/context-menu.tsx";
+import React, {useEffect, useState} from "react";
+import {
+    ContextMenu,
+    ContextMenuCheckboxItem,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuSeparator,
+    ContextMenuTrigger
+} from "@/components/ui/context-menu.tsx";
 import {SignalSelector} from "@/Tabs/Dashboard/VisualisationTiles/SignalSelector.tsx";
 import {DbcFile} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
 
@@ -9,7 +16,7 @@ export function VALUE({id, removeHook, dbcs}: {
     removeHook: (id: string) => void;
     dbcs: DbcFile[]
 }) {
-    const [interval,] = useState<number | null>(5);
+    const [interval, setInterval] = useState<number>(1);
     const [valueBuffer, setValueBuffer] = useState<number[]>([]);
     const [bufferCnt, setBufferCnt] = useState<number>(0);
     const [value, setValue] = useState<number | null>(null);
@@ -17,11 +24,6 @@ export function VALUE({id, removeHook, dbcs}: {
 
     window.electron.setCanMsgCallback((msg: CanMessage) => {
         const dataPeace = msg.id
-
-        if (interval == null) {
-            setValue(dataPeace);
-            return
-        }
 
         const newArray = [...valueBuffer];
         newArray[bufferCnt - 1] = dataPeace;
@@ -74,6 +76,21 @@ export function VALUE({id, removeHook, dbcs}: {
                     <ContextMenuItem onClick={() => removeHook(id)} inset>
                         Remove
                     </ContextMenuItem>
+
+                    <ContextMenuSeparator/>
+                    <ContextMenuCheckboxItem checked={interval == 1} onClick={() => setInterval(1)}>
+                        Set Interval: 1
+                    </ContextMenuCheckboxItem>
+                    <ContextMenuCheckboxItem checked={interval == 2} onClick={() => setInterval(2)}>
+                        Set Interval: 2
+                    </ContextMenuCheckboxItem>
+                    <ContextMenuCheckboxItem checked={interval == 5} onClick={() => setInterval(5)}>
+                        Set Interval: 5
+                    </ContextMenuCheckboxItem>
+                    <ContextMenuCheckboxItem checked={interval == 10} onClick={() => setInterval(10)}>
+                        Set Interval: 10
+                    </ContextMenuCheckboxItem>
+
                 </ContextMenuContent>
             </ContextMenu>
         </div>
