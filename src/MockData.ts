@@ -13,16 +13,16 @@ export const dbcFiles: DbcFile[] = [{
 }]
 
 export const canNodes: CanNode[] = [{
-    id: 0, label: "Node01", network: canNetworks[0].id, dbc: dbcFiles[0].id
+    id: 0, label: "Node01", network: canNetworks[0], dbc: dbcFiles[0]
 }]
 
 export const canInterfaces: CanInterface[] = [
     {id: 0, status: "available", network: null, label: "0 Kvaser Leaf Light v2"},
-    {id: 1, status: "available", network: canNetworks[0].id, label: "1 Kvaser Virtual CAN Driver"},
+    {id: 1, status: "available", network: canNetworks[0], label: "1 Kvaser Virtual CAN Driver"},
     {id: 2, status: "available", network: null, label: "2 Kvaser Virtual CAN Driver"},
-    {id: 3, status: "available", network: canNetworks[1].id, label: "3 Kvaser Virtual CAN Driver"},
+    {id: 3, status: "available", network: canNetworks[1], label: "3 Kvaser Virtual CAN Driver"},
     {id: 4, status: "available", network: null, label: "4 Kvaser Virtual CAN Driver"},
-    {id: 5, status: "available", network: canNetworks[2].id, label: "5 Kvaser Virtual CAN Driver"},
+    {id: 5, status: "available", network: canNetworks[2], label: "5 Kvaser Virtual CAN Driver"},
     {id: 6, status: "available", network: null, label: "6 Kvaser Virtual CAN Driver"},
     {id: 7, status: "available", network: null, label: "7 Kvaser Virtual CAN Driver"},
     {id: 8, status: "available", network: null, label: "8 Kvaser Virtual CAN Driver"},

@@ -19,14 +19,14 @@ export type DbcFile = {
 export type CanNode = {
     id: number
     label: string
-    network: number | null
-    dbc: number | null
+    network: CanNetwork | null
+    dbc: DbcFile | null
 }
 
 export type CanInterface = {
     id: number
     label: string
-    network: number | null
+    network: CanNetwork | null
     status: "available" | "used"
 }
 

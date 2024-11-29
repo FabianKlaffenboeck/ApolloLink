@@ -5,7 +5,7 @@ import {Theme, useTheme} from "@/components/theme-provider.tsx";
 import VisualisationGrid, {AddTileRef} from "@/Tabs/Dashboard/Dashboard.tsx";
 import {CanState, SideBar, VisualisationType} from "@/Bars/SideBar.tsx";
 import {HeaderBar, TabValue} from "@/Bars/HeaderBar.tsx";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {
     CanInterface,
     CanNetwork, CanNode,
@@ -25,6 +25,10 @@ export function MainPage() {
     const [networks] = useState<CanNetwork[]>(canNetworks)
     const [dbcs, setDbcs] = useState<DbcFile[]>(dbcFiles)
     const [nodes, setNodes] = useState<CanNode[]>(canNodes)
+
+    useEffect(() => {
+        console.log(nodes);
+    }, [nodes]);
 
 
     const choseLogoIcon = (themeProviderState: Theme) => {

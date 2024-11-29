@@ -42,7 +42,7 @@ export function VALUE({id, removeHook, dbcs}: {
             setBufferCnt(0)
         }
 
-    }, [valueBuffer]);
+    }, [bufferCnt, interval, valueBuffer]);
 
     function selectorClose() {
 

@@ -43,13 +43,18 @@ export function Nodes({busState, networks, dbcs, nodes, setNodes}: {
         }])
     }
 
-    function handleNetworkChange(id: number, value: number) {
-        setNodes(nodes.map((item) => (item.id === id ? {...item, network: value} : item)));
+    function handleNetworkChange(id: number, value: CanNetwork) {
+        setNodes(nodes.map((item) => (item.id === id ? {
+            ...item,
+            network: networks.find(it => it.id == value?.id) || null
+        } : item)));
     }
 
-    function handleDbcChange(id: number, value: number) {
-        setNodes(nodes.map((item) => (item.id === id ? {...item, dbc: value} : item)));
-
+    function handleDbcChange(id: number, value: DbcFile) {
+        setNodes(nodes.map((item) => (item.id === id ? {
+            ...item,
+            dbc: dbcs.find(it => it.id == value?.id) || null,
+        } : item)));
     }
 
     function deleteHandler(id: number) {

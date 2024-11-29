@@ -8,16 +8,17 @@ import {Button} from "@/components/ui/button.tsx"
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList,} from "@/components/ui/command.tsx"
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover.tsx"
 import {DbcFile} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
+import {useState} from "react";
 
 export function DbcSelector({disabled, rowId, selected, dbcs, handleDropdownChange}: {
     disabled: boolean
     rowId: number,
-    selected: number,
+    selected: DbcFile,
     dbcs: DbcFile[],
-    handleDropdownChange: (id: number, value: number) => void
+    handleDropdownChange: (id: number, value: DbcFile) => void
 }) {
-    const [open, setOpen] = React.useState(false)
-    const [value, setValue] = React.useState(selected)
+    const [open, setOpen] = useState(false)
+    const [value, setValue] = useState(selected)
 
 
     return (
@@ -29,7 +30,7 @@ export function DbcSelector({disabled, rowId, selected, dbcs, handleDropdownChan
                     aria-expanded={open}
                     className="w-[200px] justify-between"
                 >
-                    {dbcs.find((network) => network.id == value)?.label || "Select DBC..."}
+                    {dbcs.find((dbc) => dbc.id == value.id)?.label || "Select DBC..."}
                     <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
                 </Button>
             </PopoverTrigger>
@@ -44,15 +45,17 @@ export function DbcSelector({disabled, rowId, selected, dbcs, handleDropdownChan
                                     key={dbc.id}
                                     value={String(dbc.id)}
                                     onSelect={(currentValue) => {
-                                        const newVal = Number(currentValue) === value ? -1 : Number(currentValue)
+                                        const newValId = Number(currentValue) === value?.id ? -1 : Number(currentValue)
+                                        const newVal = dbcs.find((dbc) => dbc.id === newValId)
                                         setValue(newVal)
                                         setOpen(false)
-                                        handleDropdownChange(rowId, Number(newVal))
+                                        console.log(selected);
+                                        handleDropdownChange(rowId, newVal)
                                     }}
                                 >
                                     {dbc.label}
                                     <CheckIcon
-                                        className={cn("ml-auto h-4 w-4", value === dbc.id ? "opacity-100" : "opacity-0")}
+                                        className={cn("ml-auto h-4 w-4", value?.id === dbc.id ? "opacity-100" : "opacity-0")}
                                     />
                                 </CommandItem>))
                             }

@@ -33,7 +33,10 @@ export function ChannelList({busState, interfaces, setInterfaces, networks}: {
 
 
     function handleDropdownChange(id: number, value: number) {
-        setInterfaces(interfaces.map((item) => (item.id === id ? {...item, network: value} : item)));
+        setInterfaces(interfaces.map((item) => (item.id === id ? {
+            ...item,
+            network: networks.find(it => it.id == value)
+        } : item)));
     }
 
     function deleteHandler(id: number) {
