@@ -27,7 +27,7 @@ export interface AddTileRef {
     addTile: (type: VisualisationType) => void,
 }
 
-const VisualisationGrid = ({dbcs, busState}: {
+const VisualisationGrid = ({dbcs,nodes,busState}: {
     networks: CanNetwork[],
     dbcs: DbcFile[],
     nodes: CanNode[],
@@ -107,7 +107,7 @@ const VisualisationGrid = ({dbcs, busState}: {
                         <VALUE
                             id={tile.i}
                             removeHook={deleteTile}
-                            dbcs={dbcs}
+                            nodes={nodes}
                         ></VALUE>
                     </div>
                 )

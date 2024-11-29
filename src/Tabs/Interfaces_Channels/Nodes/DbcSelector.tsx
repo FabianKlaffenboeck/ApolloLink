@@ -30,7 +30,7 @@ export function DbcSelector({disabled, rowId, selected, dbcs, handleDropdownChan
                     aria-expanded={open}
                     className="w-[200px] justify-between"
                 >
-                    {dbcs.find((dbc) => dbc.id == value.id)?.label || "Select DBC..."}
+                    {dbcs.find((dbc) => dbc.id == value?.id)?.label || "Select DBC..."}
                     <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
                 </Button>
             </PopoverTrigger>
@@ -49,7 +49,6 @@ export function DbcSelector({disabled, rowId, selected, dbcs, handleDropdownChan
                                         const newVal = dbcs.find((dbc) => dbc.id === newValId)
                                         setValue(newVal)
                                         setOpen(false)
-                                        console.log(selected);
                                         handleDropdownChange(rowId, newVal)
                                     }}
                                 >

@@ -9,12 +9,12 @@ import {
     ContextMenuTrigger
 } from "@/components/ui/context-menu.tsx";
 import {SignalSelector} from "@/Tabs/Dashboard/VisualisationTiles/SignalSelector.tsx";
-import {DbcFile} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
+import {CanNode} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
 
-export function VALUE({id, removeHook, dbcs}: {
+export function VALUE({id, removeHook, nodes}: {
     id: string
     removeHook: (id: string) => void;
-    dbcs: DbcFile[]
+    nodes: CanNode[]
 }) {
     const [interval, setInterval] = useState<number>(1);
     const [valueBuffer, setValueBuffer] = useState<number[]>([]);
@@ -42,7 +42,7 @@ export function VALUE({id, removeHook, dbcs}: {
             setBufferCnt(0)
         }
 
-    }, [bufferCnt, interval, valueBuffer]);
+    }, [valueBuffer]);
 
     function selectorClose() {
 
@@ -62,7 +62,7 @@ export function VALUE({id, removeHook, dbcs}: {
                 openSelector={openSelector}
                 setOpenSelector={setOpenSelector}
                 closeHook={selectorClose}
-                dbcs={dbcs}
+                nodes={nodes}
             ></SignalSelector>
             <ContextMenu>
                 <ContextMenuTrigger
