@@ -2,17 +2,34 @@ import {TooltipProvider,} from "@/components/ui/tooltip"
 import LogoFKLab_Light from './assets/LogoFKLab_Light.svg'
 import LogoFKLab_Dark from './assets/LogoFKLab_Dark.svg'
 import {Theme, useTheme} from "@/components/theme-provider.tsx";
-import ComponentGrid, {AddTileRef} from "@/Dashboard.tsx";
-import {SideBar} from "@/SideBar.tsx";
-import {HeaderBar, TabValue} from "@/HeaderBar.tsx";
-import {useRef, useState} from "react";
-import {Interfaces_Channels} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
+import VisualisationGrid, {AddTileRef} from "@/Tabs/Dashboard/Dashboard.tsx";
+import {CanState, SideBar, VisualisationType} from "@/Bars/SideBar.tsx";
+import {HeaderBar, TabValue} from "@/Bars/HeaderBar.tsx";
+import {useEffect, useRef, useState} from "react";
+import {
+    CanInterface,
+    CanNetwork, CanNode,
+    DbcFile,
+    Interfaces_Channels
+} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
+import {canInterfaces, canNetworks} from "@/MockData.ts";
 
 
 export function MainPage() {
 
     const addTileTrigger = useRef<AddTileRef>(null);
-    const [tab, setTab] = useState<TabValue>("DASBOARD");
+    const [currentTap, setCurrentTap] = useState<TabValue>("DASBOARD");
+    const [busState, setBusState] = useState<CanState>("OFFLINE")
+
+    const [interfaces, setInterfaces] = useState<CanInterface[]>(canInterfaces)
+    const [networks] = useState<CanNetwork[]>(canNetworks)
+    const [dbcs, setDbcs] = useState<DbcFile[]>([])
+    const [nodes, setNodes] = useState<CanNode[]>([])
+
+    useEffect(() => {
+        console.log(nodes);
+    }, [nodes]);
+
 
     const choseLogoIcon = (themeProviderState: Theme) => {
         if (themeProviderState == "light") {
@@ -22,17 +39,15 @@ export function MainPage() {
         }
     }
 
-
     const handleTabChange = (selected: TabValue) => {
-        setTab(selected);
+        setCurrentTap(selected);
     };
 
-    const handleAddVisualisationItem = (message: string) => {
+    const addTile = (message: VisualisationType) => {
         if (addTileTrigger.current) {
             addTileTrigger.current.addTile(message);
         }
     };
-
 
     return (
         <TooltipProvider>
@@ -41,7 +56,10 @@ export function MainPage() {
                     <div className="border-b p-2">
                         {choseLogoIcon(useTheme().theme)}
                     </div>
-                    <SideBar onAddVisualisationItem={handleAddVisualisationItem}/>
+                    <SideBar
+                        busState={busState}
+                        setBusState={setBusState} tap={currentTap}
+                        onAddVisualisationItem={addTile}/>
                 </aside>
 
                 <div className="flex flex-col">
@@ -50,13 +68,28 @@ export function MainPage() {
                     <main className="grid flex-1 gap-4 overflow-auto p-4 grid-cols-3 ">
 
                         <div className="flex h-full flex-col rounded-xl bg-muted/50 p-4 col-span-3"
-                             style={{display: (tab == "DASBOARD") ? 'block' : 'none'}}>
-                            <ComponentGrid ref={addTileTrigger}></ComponentGrid>
+                             style={{display: (currentTap == "DASBOARD") ? 'block' : 'none'}}>
+                            <VisualisationGrid
+                                networks={networks}
+                                dbcs={dbcs}
+                                nodes={nodes}
+                                busState={busState}
+                                ref={addTileTrigger}
+                            ></VisualisationGrid>
                         </div>
 
                         <div className="flex h-full col-span-3"
-                             style={{display: (tab == "INTERFACES") ? 'block' : 'none'}}>
-                            <Interfaces_Channels></Interfaces_Channels>
+                             style={{display: (currentTap == "INTERFACES") ? 'block' : 'none'}}>
+                            <Interfaces_Channels
+                                interfaces={interfaces}
+                                networks={networks}
+                                dbcs={dbcs}
+                                nodes={nodes}
+                                setInterfaces={setInterfaces}
+                                setDbcs={setDbcs}
+                                setNodes={setNodes}
+                                busState={busState}
+                            ></Interfaces_Channels>
                         </div>
 
                     </main>

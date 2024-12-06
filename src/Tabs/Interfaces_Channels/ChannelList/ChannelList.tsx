@@ -15,12 +15,14 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import {CanInterface, CanNetwork} from "@/Interfaces_Channels/Interfaces_Channels.tsx";
-import {NetworkSelector} from "@/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
+import {CanInterface, CanNetwork} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
+import {NetworkSelector} from "@/Tabs/Interfaces_Channels/ChannelList/NetworkSelector.tsx";
 import {MdOutlineDelete} from "react-icons/md";
+import {CanState} from "@/Bars/SideBar.tsx";
 
 
-export function ChannelList({interfaces, setInterfaces, networks}: {
+export function ChannelList({busState, interfaces, setInterfaces, networks}: {
+    busState: CanState
     interfaces: CanInterface[],
     setInterfaces: (value: CanInterface[]) => void;
     networks: CanNetwork[],
@@ -31,7 +33,10 @@ export function ChannelList({interfaces, setInterfaces, networks}: {
 
 
     function handleDropdownChange(id: number, value: number) {
-        setInterfaces(interfaces.map((item) => (item.id === id ? {...item, network: value} : item)));
+        setInterfaces(interfaces.map((item) => (item.id === id ? {
+            ...item,
+            network: networks.find(it => it.id == value)
+        } : item)));
     }
 
     function deleteHandler(id: number) {
@@ -48,6 +53,7 @@ export function ChannelList({interfaces, setInterfaces, networks}: {
             accessorKey: "label", header: ({column}) => {
                 return (
                     <Button
+                        disabled={busState == "ONLINE"}
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
@@ -69,10 +75,12 @@ export function ChannelList({interfaces, setInterfaces, networks}: {
         {
             accessorKey: "network", header: "Network", cell: ({row}) => {
                 return (
-                    <NetworkSelector rowId={row.getValue("id")}
-                                     selected={row.getValue("network")}
-                                     networks={networks}
-                                     handleDropdownChange={handleDropdownChange}
+                    <NetworkSelector
+                        disabled={busState == "ONLINE"}
+                        rowId={row.getValue("id")}
+                        selected={row.getValue("network")}
+                        networks={networks}
+                        handleDropdownChange={handleDropdownChange}
                     >
                     </NetworkSelector>
                 )
@@ -82,10 +90,12 @@ export function ChannelList({interfaces, setInterfaces, networks}: {
             accessorKey: "delete",
             header: "",
             cell: ({row}) => (
-                <Button variant="ghost"
-                        size="icon"
-                        className="rounded-lg bg-muted"
-                        onClick={() => deleteHandler(row.getValue("id"))}>
+                <Button
+                    disabled={busState == "ONLINE"}
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-lg bg-muted"
+                    onClick={() => deleteHandler(row.getValue("id"))}>
                     <MdOutlineDelete className="size-5"/>
                 </Button>
             ),

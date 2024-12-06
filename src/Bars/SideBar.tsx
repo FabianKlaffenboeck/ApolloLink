@@ -1,14 +1,32 @@
-import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,} from "@/components/ui/tooltip"
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,} from "@/components/ui/tooltip.tsx"
 import {Button} from "@/components/ui/button.tsx";
 import {CiViewTable} from "react-icons/ci";
 import {LifeBuoy} from "lucide-react";
 import {GoGraph} from "react-icons/go";
-import {VscEmptyWindow, VscSymbolVariable} from "react-icons/vsc";
-import {GiDigitalTrace} from "react-icons/gi";
+import {VscDebugStart, VscDebugStop, VscEmptyWindow, VscSymbolVariable} from "react-icons/vsc";
+import {TabValue} from "@/Bars/HeaderBar.tsx";
+import {CgRowLast} from "react-icons/cg";
 
-export type Visualisation = "TRACE" | "TABLE" | "GRAPH" | "VALUE"
+export type VisualisationType = "TRACE" | "TABLE" | "GRAPH" | "VALUE"
+export type CanState = "ONLINE" | "OFFLINE"
 
-export function SideBar({onAddVisualisationItem}: { onAddVisualisationItem: (message: Visualisation) => void; }) {
+
+export function SideBar({tap, onAddVisualisationItem, busState, setBusState}: {
+    tap: TabValue,
+    onAddVisualisationItem: (message: VisualisationType) => void;
+    busState: CanState
+    setBusState: (value: CanState) => void;
+}) {
+
+    function goOnline() {
+        window.electron.goOnBus();
+        setBusState("ONLINE")
+    }
+
+    function goOffline() {
+        window.electron.goOffBus();
+        setBusState("OFFLINE")
+    }
 
     return (
         <TooltipProvider>
@@ -16,13 +34,14 @@ export function SideBar({onAddVisualisationItem}: { onAddVisualisationItem: (mes
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
+                            disabled={(tap == "INTERFACES") || (busState == "ONLINE")}
                             variant="ghost"
                             size="icon"
                             className="rounded-lg bg-muted"
                             aria-label="Playground"
                             onClick={() => onAddVisualisationItem("TRACE")}
                         >
-                            <GiDigitalTrace className="size-5"/>
+                            <CgRowLast className="size-5"/>
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={5}>
@@ -33,6 +52,7 @@ export function SideBar({onAddVisualisationItem}: { onAddVisualisationItem: (mes
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
+                            disabled={(tap == "INTERFACES") || (busState == "ONLINE")}
                             variant="ghost"
                             size="icon"
                             className="rounded-lg bg-muted"
@@ -50,6 +70,7 @@ export function SideBar({onAddVisualisationItem}: { onAddVisualisationItem: (mes
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
+                            disabled={(tap == "INTERFACES") || (busState == "ONLINE")}
                             variant="ghost"
                             size="icon"
                             className="rounded-lg bg-muted"
@@ -67,6 +88,7 @@ export function SideBar({onAddVisualisationItem}: { onAddVisualisationItem: (mes
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
+                            disabled={(tap == "INTERFACES") || (busState == "ONLINE")}
                             variant="ghost"
                             size="icon"
                             className="rounded-lg bg-muted"
@@ -80,8 +102,42 @@ export function SideBar({onAddVisualisationItem}: { onAddVisualisationItem: (mes
                         Value
                     </TooltipContent>
                 </Tooltip>
-
             </nav>
+
+            <nav className="grid gap-1 p-2">
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            disabled={busState == "ONLINE"}
+                            onClick={goOnline}
+                            className="rounded-lg bg-muted">
+                            <VscDebugStart className="size-5"/>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="right" sideOffset={5}>
+                        Go On Can
+                    </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            disabled={busState == "OFFLINE"}
+                            onClick={goOffline}
+                            className="rounded-lg bg-muted">
+                            <VscDebugStop className="size-5"/>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="right" sideOffset={5}>
+                        Go Offline
+                    </TooltipContent>
+                </Tooltip>
+            </nav>
+
             <nav className="mt-auto grid gap-1 p-2">
                 <Tooltip>
                     <TooltipTrigger asChild>
@@ -93,7 +149,6 @@ export function SideBar({onAddVisualisationItem}: { onAddVisualisationItem: (mes
                         Help
                     </TooltipContent>
                 </Tooltip>
-
 
                 <Tooltip>
                     <TooltipTrigger asChild>
