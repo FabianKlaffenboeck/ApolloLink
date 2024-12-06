@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/context-menu.tsx";
 import {SignalSelector} from "@/Tabs/Dashboard/VisualisationTiles/SignalSelector.tsx";
 import {CanNode} from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
+import {Input} from "@/components/ui/input.tsx";
 
 export function VALUE({id, removeHook, nodes}: {
     id: string
@@ -57,7 +58,8 @@ export function VALUE({id, removeHook, nodes}: {
     }
 
     return (
-        <div className="bg-background text-foreground w-full h-full flex items-center justify-center">
+        <div className="bg-background text-foreground w-full h-full flex flex-col items-start">
+            <Input className="w-full" placeholder="Name"/>
             <SignalSelector
                 openSelector={openSelector}
                 setOpenSelector={setOpenSelector}
@@ -66,7 +68,7 @@ export function VALUE({id, removeHook, nodes}: {
             ></SignalSelector>
             <ContextMenu>
                 <ContextMenuTrigger
-                    className="flex w-full h-full items-center justify-center rounded-md border border-dashed text-sm">
+                    className="flex w-full h-full items-center justify-center">
                     <h1>{dataOrLable()}</h1>
                 </ContextMenuTrigger>
                 <ContextMenuContent className="w-64">
@@ -76,7 +78,6 @@ export function VALUE({id, removeHook, nodes}: {
                     <ContextMenuItem onClick={() => removeHook(id)} inset>
                         Remove
                     </ContextMenuItem>
-
                     <ContextMenuSeparator/>
                     <ContextMenuCheckboxItem checked={interval == 1} onClick={() => setInterval(1)}>
                         Set Interval: 1
