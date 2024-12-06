@@ -27,7 +27,7 @@ export interface AddTileRef {
     addTile: (type: VisualisationType) => void,
 }
 
-const VisualisationGrid = ({dbcs,nodes,busState}: {
+const VisualisationGrid = ({nodes,busState}: {
     networks: CanNetwork[],
     dbcs: DbcFile[],
     nodes: CanNode[],

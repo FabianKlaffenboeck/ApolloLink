@@ -19,36 +19,33 @@ export function VALUE({id, removeHook, nodes}: {
 }) {
     const [interval, setInterval] = useState<number>(1);
     const [valueBuffer, setValueBuffer] = useState<number[]>([]);
-    const [bufferCnt, setBufferCnt] = useState<number>(0);
+    const [bufferWriteIndex, setbufferWriteIndex] = useState<number>(0);
     const [value, setValue] = useState<number | null>(null);
     const [openSelector, setOpenSelector] = useState<boolean>(false);
 
     window.electron.setCanMsgCallback((msg: CanMessage) => {
         const dataPeace = msg.id
-
         const newArray = [...valueBuffer];
-        newArray[bufferCnt - 1] = dataPeace;
+        newArray[bufferWriteIndex] = dataPeace;
         setValueBuffer(newArray);
     })
 
-    useEffect(() => {
-        setBufferCnt(bufferCnt + 1)
-        if (bufferCnt >= interval) {
-            let tmp = 0
-            console.log(valueBuffer);
-            valueBuffer.forEach(value => {
-                tmp += value
-            })
-            setValue(tmp / interval)
-            setBufferCnt(0)
-        }
 
-    }, [valueBuffer]);
+    useEffect(() => {
+        setbufferWriteIndex(prevCnt => {
+            const newCnt = prevCnt + 1;
+            if (newCnt >= interval) {
+                const total = valueBuffer.reduce((acc, value) => acc + value, 0);
+                setValue(total / interval);
+                return 0;
+            }
+            return newCnt;
+        });
+    }, [valueBuffer, interval]);
 
     function selectorClose() {
 
     }
-
 
     function dataOrLable(): string {
         if (value == null) {
