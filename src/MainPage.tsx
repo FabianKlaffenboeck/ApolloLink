@@ -12,6 +12,7 @@ import {
     DbcFile,
     Interfaces_Channels
 } from "@/Tabs/Interfaces_Channels/Interfaces_Channels.tsx";
+import {canInterfaces, canNetworks} from "@/MockData.ts";
 
 
 export function MainPage() {
@@ -20,8 +21,8 @@ export function MainPage() {
     const [currentTap, setCurrentTap] = useState<TabValue>("DASBOARD");
     const [busState, setBusState] = useState<CanState>("OFFLINE")
 
-    const [interfaces, setInterfaces] = useState<CanInterface[]>([])
-    const [networks] = useState<CanNetwork[]>([])
+    const [interfaces, setInterfaces] = useState<CanInterface[]>(canInterfaces)
+    const [networks] = useState<CanNetwork[]>(canNetworks)
     const [dbcs, setDbcs] = useState<DbcFile[]>([])
     const [nodes, setNodes] = useState<CanNode[]>([])
 

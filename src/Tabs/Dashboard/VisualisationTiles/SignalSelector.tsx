@@ -1,3 +1,4 @@
+import * as React from "react";
 import {useState} from "react";
 import {
     ColumnDef,
@@ -29,6 +30,7 @@ import {Signal} from "candied/lib/dbc/Dbc";
 import {Input} from "@/components/ui/input.tsx";
 
 export type SignalListElement = {
+    id: number;
     signalName: string
     dbcName: string
     nodeName: string
@@ -43,6 +45,7 @@ export function SignalSelector({openSelector, setOpenSelector, nodes}: {
 }) {
 
     const [signals, setSignals] = useState<SignalListElement[]>(generateNonFiltered())
+    const [selectedSignal, setSelectedSignal] = useState<SignalListElement | null>(null)
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -51,16 +54,20 @@ export function SignalSelector({openSelector, setOpenSelector, nodes}: {
 
     function generateNonFiltered(): SignalListElement[] {
         const outList: SignalListElement[] = [];
+        let id = 0
+
         nodes.forEach(node => {
 
             node.dbc?.dbcObj.data.messages.forEach(message => {
                 message.signals.forEach((signal: Signal) => {
                     const tmpItem = {
+                        id: id,
                         signalName: signal.name,
                         dbcName: node.dbc.label,
                         nodeName: node.label,
                         networkName: node.network.label
                     }
+                    id++;
                     outList.push(tmpItem)
                 })
             })
@@ -81,7 +88,6 @@ export function SignalSelector({openSelector, setOpenSelector, nodes}: {
         }
 
         setSignals(tmpList)
-        console.log(tmpList);
     }
 
 
@@ -91,12 +97,23 @@ export function SignalSelector({openSelector, setOpenSelector, nodes}: {
             header: "",
             cell: ({row}) => (
                 <Checkbox
-                    disabled={true}
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    disabled={false}
+                    checked={selectedSignal?.id == row.getValue("id")}
+                    onCheckedChange={(value) => {
+                        if (value) {
+                            setSelectedSignal(signals.find(it => it.id == row.getValue("id")))
+                        } else {
+                            setSelectedSignal(null)
+                        }
+                    }}
                     aria-label="Select row"
                 />
             ),
+        },
+        {
+            accessorKey: "id",
+            header: "ID",
+            cell: ({row}) => (<div className="capitalize">{row.getValue("id")}</div>),
         },
         {
             accessorKey: "signalName", header: "Signal", cell: ({row}) => {
