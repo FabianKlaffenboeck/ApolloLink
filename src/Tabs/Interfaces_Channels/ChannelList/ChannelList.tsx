@@ -32,10 +32,10 @@ export function ChannelList({busState, interfaces, setInterfaces, networks}: {
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
 
 
-    function handleDropdownChange(id: number, value: number) {
+    function handleDropdownChange(id: number, value: CanNetwork) {
         setInterfaces(interfaces.map((item) => (item.id === id ? {
             ...item,
-            network: networks.find(it => it.id == value)
+            network: networks.find(it => it.id == value.id)
         } : item)));
     }
 
